@@ -8,7 +8,7 @@ public class TurnTracker {
 	private Status status;
 	private Player longestRoad;
 	private Player largestArmy;
-	
+
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
@@ -48,14 +48,15 @@ public class TurnTracker {
 	{
 		throw new NotImplementedException();
 	}
-	
+
 	/**
 	 * Return the turn tracker for the currentGame
+	 * @return the current turn tracker
 	 */
 	public static TurnTracker get()
 	{
 		throw new NotImplementedException();
 	}
-	
-	
+
+
 }
