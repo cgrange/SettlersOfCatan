@@ -1,4 +1,4 @@
-package shared.Model.Resources;
+package shared.model.resources;
 
 /**
  * Represents the different types of resources

@@ -1,7 +1,6 @@
-package shared.Model.Resources;
+package shared.model.resources;
 
-import shared.Model.players.Player;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import shared.model.players.Player;
 
 public class TradeOffer {
 	private Player sender;
@@ -24,13 +23,11 @@ public class TradeOffer {
 	 * Rejects the trade
 	 */
 	public void reject() {
-		throw new NotImplementedException();
 	}
 	
 	/**
 	 * Makes the appropriate trade
 	 */
 	public void trade() {
-		throw new NotImplementedException();
 	}
 }

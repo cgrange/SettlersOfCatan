@@ -1,6 +1,4 @@
-package shared.Model.players;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+package shared.model.players;
 
 public class TurnTracker {
 
@@ -46,7 +44,6 @@ public class TurnTracker {
 	 */
 	public void moveOn()
 	{
-		throw new NotImplementedException();
 	}
 
 	/**
@@ -55,7 +52,7 @@ public class TurnTracker {
 	 */
 	public static TurnTracker get()
 	{
-		throw new NotImplementedException();
+		return null;
 	}
 
 

@@ -1,4 +1,4 @@
-package shared.Model.players;
+package shared.model.players;
 
 public class Player {
 

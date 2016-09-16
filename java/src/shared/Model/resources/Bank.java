@@ -1,6 +1,4 @@
-package shared.Model.Resources;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+package shared.model.resources;
 
 /**
  * Represents a collection of resources
@@ -15,7 +13,7 @@ public class Bank {
 	Resource sheep = new Resource(ResourceType.Sheep, 0);
 	
 	public Resource getResource(ResourceType type){
-		throw new NotImplementedException();
+		return null;
 	}
 	
 	/**
@@ -23,7 +21,7 @@ public class Bank {
 	 * @return true if the user has resources
 	 */
 	public boolean canRob(){
-		throw new NotImplementedException();
+		return false;
 	}
 	
 	/**
@@ -31,7 +29,6 @@ public class Bank {
 	 * @param robbingBank the bank to give the resource to
 	 */
 	public void rob(Bank robbingBank) {
-		throw new NotImplementedException();
 	}
 	
 	/**
@@ -39,14 +36,14 @@ public class Bank {
 	 * @return true if a settlement can be built
 	 */
 	public boolean canBuildSettlement() {
-		throw new NotImplementedException();
+		return false;
 	}
 	
 	/**
 	 * Removes the amount of resources of a settlement being built
 	 */
 	public void removeSettlementResources() {
-		throw new NotImplementedException();
+
 	}
 	
 	/**
@@ -54,14 +51,14 @@ public class Bank {
 	 * @return true if a city can be built
 	 */
 	public boolean canBuildCity() {
-		throw new NotImplementedException();
+		return false;
 	}
 	
 	/**
 	 * Removes the amount of resources of a city being built
 	 */
 	public void removeCityResources() {
-		throw new NotImplementedException();
+
 	}
 	
 	/**
@@ -69,14 +66,14 @@ public class Bank {
 	 * @return true if a road can be built
 	 */
 	public boolean canBuildRoad() {
-		throw new NotImplementedException();
+		return false;
 	}
 	
 	/**
 	 * Removes the amount of resources of a road being built
 	 */
 	public void removeRoadResources() {
-		throw new NotImplementedException();
+		
 	}
 	
 	/**
@@ -84,14 +81,14 @@ public class Bank {
 	 * @return true if a dev card can be drawn
 	 */
 	public boolean canDrawDevCard() {
-		throw new NotImplementedException();
+		return false;
 	}
 	
 	/**
 	 * Removes the amount of resources of a dev card being drawn
 	 */
 	public void removeDevCardResources() {
-		throw new NotImplementedException();
+		
 	}
 	
 	/**
@@ -100,7 +97,7 @@ public class Bank {
 	 * @param receiver The bank receiving the offer
 	 */
 	public void acceptTrade(Bank sender, Bank receiver) {
-		throw new NotImplementedException();
+		
 	}
 	
 	/**
@@ -108,6 +105,6 @@ public class Bank {
 	 * @return The central bank of the game
 	 */
 	public static Bank getCentralBank() {
-		throw new NotImplementedException();
+		return null;
 	}
 }
