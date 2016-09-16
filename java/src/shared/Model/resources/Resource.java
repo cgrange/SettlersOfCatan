@@ -27,6 +27,7 @@ public class Resource {
 	 * @pre do not try to decrement past zero 
 	 * @pre toDecrement should be a positive number
 	 * @param toDecrement how much to decrement the resource
+	 * @exception gavins exception
 	 */
 	public void decrementAmounts(int toDecrement) {
 	}
