@@ -30,4 +30,12 @@ public class TradeOffer {
 	 */
 	public void trade() {
 	}
+	
+	/**
+	 * Serializes the turn tracker
+	 * @return a json string
+	 */
+	public String serialize() {
+		return "";
+	}
 }

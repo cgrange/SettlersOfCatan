@@ -1,5 +1,7 @@
 package shared.model.resources;
 
+import shared.definitions.ResourceType;
+
 /**
  * Represents a resource
  *
@@ -38,5 +40,15 @@ public class Resource {
 	 * @param toIncrement how much to increment the resource
 	 */
 	public void incrementAmounts(int toDecrement) {
+	}
+	
+	/**
+	 * Checks whether there is the specified amount of this resource
+	 * @param amount
+	 * @return
+	 */
+	public boolean hasEnough(int amount)
+	{
+		return false;
 	}
 }

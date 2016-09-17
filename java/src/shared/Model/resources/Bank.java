@@ -1,16 +1,19 @@
 package shared.model.resources;
 
+import shared.definitions.ResourceType;
+import shared.locations.EdgeLocation;
+
 /**
  * Represents a collection of resources
  * 
  */
 public class Bank {
 
-	Resource ore = new Resource(ResourceType.Ore, 0);
-	Resource wheat = new Resource(ResourceType.Wheat, 0);
-	Resource brick = new Resource(ResourceType.Brick, 0);
-	Resource wood = new Resource(ResourceType.Wood, 0);
-	Resource sheep = new Resource(ResourceType.Sheep, 0);
+	Resource ore = new Resource(ResourceType.ORE, 0);
+	Resource wheat = new Resource(ResourceType.WHEAT, 0);
+	Resource brick = new Resource(ResourceType.BRICK, 0);
+	Resource wood = new Resource(ResourceType.WOOD, 0);
+	Resource sheep = new Resource(ResourceType.SHEEP, 0);
 	
 	public Resource getResource(ResourceType type){
 		return null;
@@ -106,5 +109,50 @@ public class Bank {
 	 */
 	public static Bank getCentralBank() {
 		return null;
+	}
+	
+	/**
+	 * Checks whether this player has the resources to make the specified trade
+	 * @param inputResource the resource he wants to trade
+	 * @param outputResource the resource he wants to receive
+	 * @param ratio the correct ratio for the port trade
+	 * @return whether he has the correct resources
+	 */
+	public boolean canTradeAtPort(Resource inputResource, Resource outputResource, int ratio)
+	{
+		return false;
+	}
+	
+	/**
+	 * Makes the given trade
+	 * @pre canTradeAtPort is accurate
+	 * @pre the user actually has the specified port
+	 * @param ratio 2,3 or 4
+	 * @param inputResource 
+	 * @param outputResource
+	 */
+	public void tradeAtPort(int ratio, Resource inputResource, Resource outputResource)
+	{
+		
+	}
+	
+	/**
+	 * Discards the given cards
+	 * @pre the player really has to discard
+	 * @pre the player has the given cards
+	 * @param bank the cards to discard
+	 */
+	public void discard(Bank bank)
+	{
+		
+	}
+	
+	/**
+	 * Serializes the Bank
+	 * @return a json string
+	 */
+	public String serialize()
+	{
+		return "";
 	}
 }
