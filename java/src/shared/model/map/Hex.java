@@ -22,7 +22,7 @@ public class Hex {
 
 	/**
 	 * Checks whether the robber can be placed here
-	 * @return false if a desert, or if the robber is already here
+	 * @return false if the robber is already here
 	 */
 	public boolean canPlaceRobber()
 	{
