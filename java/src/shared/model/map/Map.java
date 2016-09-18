@@ -48,6 +48,7 @@ public class Map {
 	
 	/**
 	 * Adds a road
+	 * @exception CannotBuildRoad if playerIndex or location is invalid.
 	 * @param playerIndex the index of the player
 	 * @param location the place to add
 	 */
@@ -58,6 +59,7 @@ public class Map {
 	
 	/**
 	 * Checks to see if the given player can add a city
+	 * @exception CannotBuildCity if playerIndex or location is invalid.
 	 * @param playerIndex the player to add
 	 * @param location where to add
 	 * @return
@@ -69,6 +71,7 @@ public class Map {
 	
 	/**
 	 * Checks to see if the given player can add a settlement
+	 * @exception CannotBuildSettlement if playerIndex or location is invalid.
 	 * @param playerIndex the player to add
 	 * @param location where to add
 	 * @return
