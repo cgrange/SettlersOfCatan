@@ -18,6 +18,7 @@ public abstract class VertexObject {
 
 	/**
 	 * Gets the resources from the given location
+	 * @exception CannotCollectResources if the resources are being blocked off by outside source 
 	 * @param location the location to get resources from
 	 */
 	public void collectResources(HexLocation location)

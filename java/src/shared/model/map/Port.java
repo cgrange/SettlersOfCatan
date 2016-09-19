@@ -8,6 +8,33 @@ public class Port {
 	private ResourceType resourceType;
 	private EdgeLocation location;
 	
+
+	public void setLocation(EdgeLocation location)
+	{
+		this.location = location;
+		return;
+	}
+
+	public void setResourceType(ResouceType resourceType){
+		this.resourceType = resourceType;
+		return;
+	}
+
+	public void setResoucesRequired(int resourcesRequired){
+		this.resourcesRequired = resourcesRequired;
+	}
+
+	public EdgeLocation getLocation(){
+		return location;
+	}
+
+	public int getResourcesRequired(){
+		return resourcesRequired;
+	}
+	public ResouceType getResourceType(){
+		return resouceType;
+	}
+
 	/**
 	 * Serializes the port
 	 * @return a json string

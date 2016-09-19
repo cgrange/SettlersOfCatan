@@ -22,6 +22,7 @@ public class Hex {
 
 	/**
 	 * Checks whether the robber can be placed here
+	 * @exception if the robber cannot be placed on the Hex
 	 * @return false if the robber is already here
 	 */
 	public boolean canPlaceRobber()
