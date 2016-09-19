@@ -4,8 +4,14 @@ import shared.definitions.CatanColor;
 
 public class MessageLine {
 
-	private Player source;
+	private int playerIndex;
 	private String entry;
+
+
+	public MessageLine(int playerIndex, String entry){
+		this.playerIndex = playerIndex;
+		this.entry = entry;
+	}
 	
 	/**
 	 * Adds a line to the Chat List
@@ -14,10 +20,6 @@ public class MessageLine {
 	public CatanColor getPlayerColor(int playerIndex){
 
 		return null;
-	}
-
-	public void setEntry(String entry){
-
 	}
 
 	/**
