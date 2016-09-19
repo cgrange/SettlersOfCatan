@@ -32,7 +32,7 @@ public class Port {
 	}
 
 	public ResourceType getResourceType(){
-		return resouceType;
+		return resourceType;
 	}
 
 	/**
