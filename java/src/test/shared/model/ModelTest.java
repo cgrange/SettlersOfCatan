@@ -11,6 +11,6 @@ public class ModelTest {
     Model model = new Model();
     int points = model.calculatePoints(0);
 
-    assertEquals(1, points);
+    assertEquals(0, points);
   }
 }
