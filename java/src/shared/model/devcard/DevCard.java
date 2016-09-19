@@ -5,13 +5,13 @@ import shared.definitions.DevCardType;
 public class DevCard {
 	private DevCardType type;
 	private int amount;
-	
+
 	public DevCard(DevCardType type)
 	{
 		this.type = type;
 		this.amount = 0;
 	}
-	
+
 	public DevCardType getType() {
 		return type;
 	}
@@ -28,12 +28,12 @@ public class DevCard {
 	{
 		return false;
 	}
-	
+
 	public void play()
 	{
-		
+
 	}
-	
+
 	public String serialize()
 	{
 		return "";

@@ -7,13 +7,13 @@ import shared.definitions.DevCardType;
  *
  */
 public class DevCardHand {
-	
+
 	private DevCard monopoly = new DevCard(DevCardType.MONOPOLY);
 	private DevCard yearOfPlenty = new DevCard(DevCardType.YEAR_OF_PLENTY);
 	private DevCard monument = new DevCard(DevCardType.MONUMENT);
 	private DevCard soldier = new DevCard(DevCardType.SOLDIER);
 	private DevCard buildRoad = new DevCard(DevCardType.ROAD_BUILD);
-	
+
 	/**
 	 * Serializes the hand
 	 * @return a json string
@@ -22,7 +22,7 @@ public class DevCardHand {
 	{
 		return "";
 	}
-	
+
 	/**
 	 * Gets the bank's cards
 	 * @return the central group of cards
@@ -31,26 +31,26 @@ public class DevCardHand {
 	{
 		return null;
 	}
-	
+
 	/**
 	 * Checks whether a card can be played
 	 * @param type the type of the dev card
-	 * @return true if it can be played
+	 * @return true if the card can be played
 	 */
 	public boolean canPlay(DevCardType type)
 	{
 		return false;
 	}
-	
+
 	/**
 	 * decrements the given dev card
 	 * @param type the type to decrement
 	 */
 	public void play(DevCardType type)
 	{
-		
+
 	}
-	
+
 	/**
 	 * Checks how many dev cards you have
 	 * @param type the type of dev card to check
@@ -60,14 +60,14 @@ public class DevCardHand {
 	{
 		return 0;
 	}
-	
+
 	/**
 	 * Makes new dev cards active at the end of your turn
-	 * @param newHand
+	 * @param newHand the new hand for the player
 	 */
 	public void moveToNewDevCardHand(DevCardHand newHand)
 	{
-		
+
 	}
 
 }

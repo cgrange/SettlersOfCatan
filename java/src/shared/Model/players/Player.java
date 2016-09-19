@@ -1,10 +1,10 @@
 package shared.model.players;
 
-import shared.Model.resources.Bank;
-import shared.Model.devCard.DevCardHand;
+import shared.model.resources.Bank;
+import shared.model.devcard.DevCardHand;
 
 public class Player {
-	
+
 	private Bank resources;
 	private DevCardHand newDevCards;
 	private DevCardHand oldDevCards;
@@ -15,15 +15,15 @@ public class Player {
 	private boolean playedDevCard;
 	private int numberOfRoads;
 	private int numberOfSettlements;
-	
+
 	public Player(Color color, String name, int index){
 		this.color = color;
 		this.name = name;
 		this.playerIndex = index;
 	}
-	
+
 	public enum Color {
-	     BLUE, RED, ORANGE, YELLOW, GREEN, PURPLE, PUCE, WHITE, BROWN 
+	     BLUE, RED, ORANGE, YELLOW, GREEN, PURPLE, PUCE, WHITE, BROWN
 	};
 	private int playerID;
 	private int playerIndex;

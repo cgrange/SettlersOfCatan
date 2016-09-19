@@ -12,7 +12,7 @@ import shared.model.resources.Bank;
 import shared.model.resources.Resource;
 
 public interface IProxy {
-	
+
 	/**
 	 * Logs the caller in to the server, and sets their catan.user HTTP cookie
 	 * @pre username is not null
@@ -20,7 +20,7 @@ public interface IProxy {
 	 * @post the HTTP response headers set the catan.user cookie to contain the identity of the logged in player
 	 */
 	public void user_login();
-	
+
 	/**
 	 * Creates a new user account, logs the caller in
 	 * @pre username is not null
@@ -30,24 +30,24 @@ public interface IProxy {
 	 * @post the HTTP response headers set the catan.user cookie to contain the identity of the logged in player
 	 */
 	public void user_register();
-	
+
 	/**
 	 * Gets info about all games on server
 	 * @post body contains a JSON array containing a list of objects that contain information about the server's games
 	 * @return information about all the games on the server
 	 */
 	public List<SimpleGame> games_list();
-	
+
 	/**
 	 * Creates a new game on the server
-	 * @param randomTiles
-	 * @param randomNumbers
-	 * @param randomPorts
+	 * @param randomTiles the random tiles
+	 * @param randomNumbers the random numbers
+	 * @param randomPorts the random ports
 	 * @pre all parameters are valid
 	 * @return A new game information
 	 */
 	public SimpleGame games_create(boolean randomTiles, boolean randomNumbers, boolean randomPorts);
-	
+
 	/**
 	 * Adds the player to the specified game
 	 * @pre the user has previously logged in to the server
@@ -56,10 +56,12 @@ public interface IProxy {
 	 * @pre the specified color is valid
 	 * @post the player is in a game
 	 * @post The catan.game HTTP cookie is set
-	 * @return
+	 * @param id the gameId
+	 * @param color the color of the player
+	 * @return the game
 	 */
 	public String games_join(int id, CatanColor color);
-	
+
 	/**
 	 * This method is for testing and debugging purposes. When a bug is found, you can use the
      * /games/save method to save the state of the game to a file, and attach the file to a bug report.
@@ -71,7 +73,7 @@ public interface IProxy {
      * @param id the game ID
 	 */
 	public void games_save(int id);
-	
+
 	/**
 	 * This method is for testing and debugging purposes. When a bug is found, you can use the
      * /games/save method to save the state of the game to a file, and attach the file to a bug report.
@@ -83,7 +85,7 @@ public interface IProxy {
      * @post game state is restored
 	 */
 	public void games_load(String name);
-	
+
 	/**
 	 * Returns the current state of the game in JSON format
 	 * @param versionNumber the current version number, does not return anything if nothing has changed
@@ -93,7 +95,7 @@ public interface IProxy {
 	 * @return the current Model, or nothing if there is no update
 	 */
 	public Model game_model(int versionNumber);
-	
+
 	/**
 	 * Clears out the history of the game
 	 * @pre User is logged in and joined
@@ -102,26 +104,26 @@ public interface IProxy {
 	 * @return the model of the clear game
 	 */
 	public Model game_reset();
-	
+
 	/**
 	 * Get a list of commands in the game
 	 * @return a list of commands that have been executed in the game
 	 * @pre the caller is logged in and joined a game
 	 */
 	public Model game_commands_get();
-	
+
 	/**
 	 * Executes the specified command list in the current game
-	 * @param the command list to apply
+	 * @param commands the command list to apply
 	 */
 	public void game_commands_post(List<String> commands);
-	
+
 	/**
 	 * Returns a list of supported AI player types
 	 * @return the list of supported AI types
 	 */
 	public List<String> game_listAI();
-	
+
 	/**
 	 * Adds an AI player to the current game
 	 * @param AIType the type of AI to add
@@ -129,10 +131,10 @@ public interface IProxy {
 	 * @pre the game is not full
 	 * @pre The specified AIType is valid
 	 * @post the AI player is added
-	 * @return
+	 * @return the game with the AI added
 	 */
 	public SimpleGame game_addAI(String AIType);
-	
+
 	/**
 	 * Sets the server's logging level
 	 * @pre the caller specifies a valid logging level
@@ -140,7 +142,7 @@ public interface IProxy {
 	 * @param level a valid logging level
 	 */
 	public void util_changeLogLevel(String level);
-	
+
 	/**
 	 * Sends a chat message
 	 * @param message the message to send
@@ -148,7 +150,7 @@ public interface IProxy {
 	 * @post the chat should contain your message
 	 */
 	public Model move_sendChat(String message);
-	
+
 	/**
 	 * Respond to a trade offer
 	 * @pre you have been offered a domestic trade
@@ -160,7 +162,7 @@ public interface IProxy {
 	 * @return the model
 	 */
 	public Model move_acceptTrade(boolean willAccept);
-	
+
 	/**
 	 * Discard cards
 	 * @pre the status of the client model is discarding
@@ -172,7 +174,7 @@ public interface IProxy {
 	 * @return the model
 	 */
 	public Model move_discardCards(Bank toDiscard);
-	
+
 	/**
 	 * Roll number
 	 * @param number integer in the range 2-12
@@ -182,7 +184,7 @@ public interface IProxy {
 	 * @return the model
 	 */
 	public Model move_rollNumber(int number);
-	
+
 	/**
 	 * Builds a road
 	 * @param free whether or not you get this piece for free
@@ -198,7 +200,7 @@ public interface IProxy {
 	 * @return the model
 	 */
 	public Model move_buildRoad(boolean free, EdgeLocation edge);
-	
+
 	/**
 	 * Builds a settlement on the model
 	 * @param free whether or not you get this piece for free
@@ -213,7 +215,7 @@ public interface IProxy {
 	 * @post the settlement is on the map
 	 */
 	public Model move_buildSettlement(boolean free, VertexLocation vertex);
-	
+
 	/**
 	 * Builds a city
 	 * @param vertex the location of the city
@@ -225,7 +227,7 @@ public interface IProxy {
 	 * You got a settlement back
 	 */
 	public Model move_buildCity(VertexLocation vertex);
-	
+
 	/**
 	 * Creates a trade offer
 	 * @param offer the specified offer
@@ -235,7 +237,7 @@ public interface IProxy {
 	 * @post the trade is offered to the otehr player
 	 */
 	public Model move_offerTrade(Bank offer, int playerIndex);
-	
+
 	/**
 	 * Causes maritime trade
 	 * @param ratio integer 2, 3 or 4
@@ -247,7 +249,7 @@ public interface IProxy {
 	 * @post the trade has been executed
 	 */
 	public Model move_maritimeTrade(int ratio, Resource inputResource, Resource outputResource);
-	
+
 	/**
 	 * Rob player
 	 * @param location the new robber location
@@ -259,7 +261,7 @@ public interface IProxy {
 	 * @post the player being robbed gave you one of his resource cards
 	 */
 	public Model move_robPlayer(HexLocation location, int victimIndex);
-	
+
 	/**
 	 * Finish your turn
 	 * @post the card in your new dev card hand have been transferred to your old dev card hand
@@ -267,7 +269,7 @@ public interface IProxy {
 	 * @return the model
 	 */
 	public Model move_finishTurn();
-	
+
 	/**
 	 * Draw a dev card
 	 * @pre you have the required resources
@@ -277,7 +279,7 @@ public interface IProxy {
 	 * @post it is the next player's turn
 	 */
 	public Model move_buyDevCard();
-	
+
 	/**
 	 * Play a soldier dev card
 	 * @param location the new location for the robber
@@ -291,7 +293,7 @@ public interface IProxy {
 	 * @post you are not allowed to play other dev cards during this turn, except monument cards
 	 */
 	public Model move_soldier(HexLocation location, int victimIndex);
-	
+
 	/**
 	 * Plays a year of plenty dev card
 	 * @param resource1 the first resource you want
@@ -301,7 +303,7 @@ public interface IProxy {
 	 * @post you gained the two specified resources
 	 */
 	public Model move_yearOfPlenty(Resource resource1, Resource resource2);
-	
+
 	/**
 	 * Plays a road building dev card
 	 * @param spot1 the first road
@@ -316,7 +318,7 @@ public interface IProxy {
 	 * @return the model
 	 */
 	public Model move_roadBuilding(EdgeLocation spot1, EdgeLocation spot2);
-	
+
 	/**
 	 * Plays a monopoly dev card
 	 * @param resource the resouce being taken from the other players
@@ -324,7 +326,7 @@ public interface IProxy {
 	 * @return the model
 	 */
 	public Model move_monopoly(Resource resource);
-	
+
 	/**
 	 * Plays a monument dev card
 	 * @return the model
@@ -332,8 +334,8 @@ public interface IProxy {
 	 * @post you gained a victory point
 	 */
 	public Model move_monument();
-	
-	
-	
-	
+
+
+
+
 }

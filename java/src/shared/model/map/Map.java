@@ -3,9 +3,8 @@ package shared.model.map;
 import java.util.List;
 
 import map.Road;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
+import shared.locations.*;
+import shared.exceptions.*;
 
 public class Map {
 	private List<City> cities;
@@ -15,75 +14,77 @@ public class Map {
 	private List<Port> ports;
 	private List<Hex> hexes;
 	private Robber robber;
-	
+
 	/**
 	 * Adds a road
-	 * @exception CannotBuildRoad if playerIndex or location is invalid.
+	 * @exception CannotBuildRoadException if playerIndex or location is invalid.
 	 * @param playerIndex the index of the player
 	 * @param location the place to add
 	 */
-	public void addRoad(int playerIndex, EdgeLocation location)
+	public void addRoad(int playerIndex, EdgeLocation location) throws CannotBuildRoadException
 	{
-		
+
 	}
-	
+
 	/**
 	 * Adds a settlement
-	 * @exception CannotBuildSettlement if playerIndex or location is invalid.
+	 * @exception CannotBuildSettlementException if playerIndex or location is invalid.
 	 * @param playerIndex the index of the player
 	 * @param location the place to add
 	 */
-	public void addSettlement(int playerIndex, VertexLocation location)
+	public void addSettlement(int playerIndex, VertexLocation location) throws CannotBuildSettlementException
 	{
-		
+
 	}
-	
+
 	/**
 	 * Adds a City
-	 * @exception CannotBuildCity if playerIndex or location is invalid.
+	 * @exception CannotBuildCityException if playerIndex or location is invalid.
 	 * @param playerIndex the index of the player
 	 * @param location the place to add
 	 */
-	public void addCity(int playerIndex, VertexLocation location)
+	public void addCity(int playerIndex, VertexLocation location) throws CannotBuildCityException
 	{
-		
+
 	}
-	
+
 	/**
 	 * Adds a road
-	 * @exception CannotBuildRoad if playerIndex or location is invalid.
+	 * @exception CannotBuildRoadException if playerIndex or location is invalid.
 	 * @param playerIndex the index of the player
 	 * @param location the place to add
+	 * @return boolean for whether or not the road can be added
 	 */
-	public boolean canAddRoad(int playerIndex, EdgeLocation location)
+	public boolean canAddRoad(int playerIndex, EdgeLocation location) throws CannotBuildRoadException
 	{
+
 		return false;
 	}
-	
+
 	/**
 	 * Checks to see if the given player can add a city
-	 * @exception CannotBuildCity if playerIndex or location is invalid.
+	 * @exception CannotBuildCityException if playerIndex or location is invalid.
 	 * @param playerIndex the player to add
 	 * @param location where to add
-	 * @return
+	 * @return whether or not the city can be added
 	 */
-	public boolean canAddCity(int playerIndex, VertexLocation location)
+	public boolean canAddCity(int playerIndex, VertexLocation location) throws CannotBuildCityException
 	{
 		return false;
 	}
-	
+
 	/**
 	 * Checks to see if the given player can add a settlement
-	 * @exception CannotBuildSettlement if playerIndex or location is invalid.
+	 * @exception CannotBuildSettlementException if playerIndex or location is invalid.
 	 * @param playerIndex the player to add
 	 * @param location where to add
-	 * @return
+	 * @return whether or not the settlement can be added
 	 */
-	public boolean canAddSettlement(int playerIndex, VertexLocation location)
+	public boolean canAddSettlement(int playerIndex, VertexLocation location) throws CannotBuildSettlementException
 	{
 		return false;
 	}
-	
+
 	/**
 	 * Gets the objects for the specified player
 	 * @param PlayerIndex the player to get the objects for
@@ -93,7 +94,7 @@ public class Map {
 	{
 		return null;
 	}
-	
+
 	/**
 	 * Gets the objects for the specified player
 	 * @param PlayerIndex the player to get the objects for
@@ -103,7 +104,7 @@ public class Map {
 	{
 		return null;
 	}
-	
+
 	/**
 	 * Gets the objects for the specified player
 	 * @param PlayerIndex the player to get the objects for
@@ -113,7 +114,7 @@ public class Map {
 	{
 		return null;
 	}
-	
+
 	/**
 	 * Gets the objects for the specified player
 	 * @param PlayerIndex the player to get the objects for
@@ -123,26 +124,26 @@ public class Map {
 	{
 		return null;
 	}
-	
+
 	/**
 	 * Checks to see if you can harvest resources from a location
 	 * @param location the location to check
-	 * @return
+	 * @return boolean whether or not the resources can be harvested
 	 */
 	public boolean canHarvestResources(HexLocation location)
 	{
 		return false;
 	}
-	
+
 	/**
 	 * Gets resources on a die roll
 	 * @param dieRoll The number to use
 	 */
 	public void harvestResources(int dieRoll)
 	{
-		
+
 	}
-	
+
 	/**
 	 * Serializes the map
 	 * @return a json string

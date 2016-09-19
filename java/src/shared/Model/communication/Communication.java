@@ -1,11 +1,14 @@
-package shared.Model.communication;
+package shared.model.communication;
 
-import shared.Model.MessageLine;
+import java.util.List;
+import shared.model.communication.MessageLine;
+
+import shared.model.communication.MessageLine;
 
 public class Communication {
 
-	private chatList List <MessageLine>;
-	private logList List <MessageLine>;
+	private List<MessageLine> chatList;
+	private List<MessageLine> logList;
 
 	/**
 	 * Adds a line to the Chat List

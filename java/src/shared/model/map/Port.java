@@ -7,7 +7,6 @@ public class Port {
 	private int resourcesRequired;
 	private ResourceType resourceType;
 	private EdgeLocation location;
-	
 
 	public void setLocation(EdgeLocation location)
 	{
@@ -15,7 +14,7 @@ public class Port {
 		return;
 	}
 
-	public void setResourceType(ResouceType resourceType){
+	public void setResourceType(ResourceType resourceType){
 		this.resourceType = resourceType;
 		return;
 	}
@@ -31,7 +30,8 @@ public class Port {
 	public int getResourcesRequired(){
 		return resourcesRequired;
 	}
-	public ResouceType getResourceType(){
+
+	public ResourceType getResourceType(){
 		return resouceType;
 	}
 

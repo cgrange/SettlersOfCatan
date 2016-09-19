@@ -1,5 +1,6 @@
 package shared.definitions;
 
-public enum Status {
+public enum Status
+{
 	ROLLING, ROBBING, PLAYING, FIRSTROUND, SECONDROUND
 }
