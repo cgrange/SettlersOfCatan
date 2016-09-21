@@ -33,6 +33,15 @@ public class Player {
 	public int getPlayerID() {
 		return playerID;
 	}
+	
+	/**
+	 * A static method to retrieve any player by his playerID
+	 * @param playerID the Player ID of the desired player
+	 * @return The player with the stipulated ID
+	 */
+	public static Player get(int playerID) {
+		return null;
+	}
 
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
