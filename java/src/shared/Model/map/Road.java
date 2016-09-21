@@ -1,4 +1,4 @@
-package map;
+package shared.model.map;
 
 import shared.locations.EdgeLocation;
 import shared.model.players.Player;

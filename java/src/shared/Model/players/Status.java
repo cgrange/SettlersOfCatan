@@ -1,4 +1,4 @@
-package shared.Model.players;
+package shared.model.players;
 
 public enum Status {
 	Rolling, Robbing, Playing, Discarding, FirstRound, SecondRound

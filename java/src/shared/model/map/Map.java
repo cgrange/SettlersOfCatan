@@ -2,7 +2,7 @@ package shared.model.map;
 
 import java.util.List;
 
-import map.Road;
+import shared.model.map.Road;
 import shared.locations.*;
 import shared.exceptions.*;
 
