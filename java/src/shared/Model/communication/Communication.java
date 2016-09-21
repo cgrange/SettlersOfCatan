@@ -3,8 +3,6 @@ package shared.model.communication;
 import java.util.List;
 import shared.model.communication.MessageLine;
 
-import shared.model.communication.MessageLine;
-
 public class Communication {
 
 	private List<MessageLine> chatList;
