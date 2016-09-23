@@ -35,7 +35,7 @@ public class Model {
 	 */
 	public static Model get()
 	{
-		if(this == null){
+		if(instance == null){
 			instance = new Model();
 		}
 		return instance;
