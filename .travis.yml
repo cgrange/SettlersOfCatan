@@ -1,6 +1,6 @@
 language: java
 script:
-  - ant test-client
+  - ant test
 notifications:
   slack:
     rooms:
