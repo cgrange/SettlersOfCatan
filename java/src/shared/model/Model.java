@@ -25,7 +25,20 @@ public class Model {
 	 */
 	public int calculatePoints(int playerIndex)
 	{
-		return 0;
+		Player currentPlayer;
+		int points = 0;
+
+		for(Player p : players){
+			if (p.getPlayerIndex() == playerIndex){
+				currentPlayer = p;
+			}
+		}
+
+		points += currentPlayer.getNumberOfSettlements();
+
+		//add other instances when points are merited.
+
+		return points;
 	}
 	
 	/**
@@ -47,8 +60,50 @@ public class Model {
 	 */
 	public static void setCurrentModel(Model model)
 	{
-		
+		instance = model;	
 	}
+
+	public static Bank getBank(){
+		return centralBank;
+	}
+
+	public static void setBank(Bank b){
+		centralBank = b;
+	}
+
+	public static List getPlayers(){
+		return players;
+	}
+
+	public static void setPlayers(List <Player> playerList){
+		players = playerList;
+	}
+
+	public static int getVersion(){
+		return version;
+	}
+
+	public static void setVersion(int v){
+		version = v;
+	}
+
+	public static TurnTracker getTurnTracker(){
+		return turnTracker;
+	}
+
+	public static void setTurnTracker(TurnTracker t){
+		turnTracker = t;
+	}
+
+	public static TradeOffer getTradeOffer(){
+		return tradeOffer;
+	}
+
+	public static void setTradeOffer(TradeOffer t){
+		tradeOffer = t;
+	}
+
+
 	
 	/**
 	 * serializes a model
