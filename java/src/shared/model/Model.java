@@ -10,6 +10,7 @@ import shared.model.resources.Bank;
 import shared.model.resources.TradeOffer;
 
 public class Model {
+	private static Model instance;
 	private Bank centralBank;
 	private List<Player> players;
 	private Map map;
@@ -34,7 +35,10 @@ public class Model {
 	 */
 	public static Model get()
 	{
-		return null;
+		if(instance == null){
+			instance = new Model();
+		}
+		return instance;
 	}
 	
 	/**
