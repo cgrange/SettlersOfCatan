@@ -43,7 +43,11 @@ public class Player {
 	public static Player get(int playerID) {
 		return null;
 	}
-
+	
+	public static Player getCurrentPlayer(){
+		//TODO get current player from turn tracker
+		return new Player(Color.BLUE, "bob", 3);
+	}
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
 	}
