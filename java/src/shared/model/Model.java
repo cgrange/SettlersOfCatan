@@ -12,7 +12,7 @@ import shared.model.resources.TradeOffer;
 public class Model {
 	private static Model instance;
 	private Bank centralBank;
-	private List<Player> players;
+	private List<Player> playerList;
 	private Map map;
 	private int version;
 	private TurnTracker turnTracker;
@@ -56,11 +56,11 @@ public class Model {
 	}
 
 	public List getPlayers(){
-		return players;
+		return playerList;
 	}
 
-	public void setPlayers(List <Player> playerList){
-		players = playerList;
+	public void setPlayers(List <Player> pList){
+		playerList = pList;
 	}
 
 	public int getVersion(){
