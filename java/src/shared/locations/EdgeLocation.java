@@ -1,5 +1,7 @@
 package shared.locations;
 
+import com.google.gson.JsonObject;
+
 /**
  * Represents the location of an edge on a hex map
  */
@@ -13,6 +15,15 @@ public class EdgeLocation
 	{
 		setHexLoc(hexLoc);
 		setDir(dir);
+	}
+	
+	public JsonObject serialize()
+	{
+		JsonObject road = new JsonObject();
+		road.addProperty("x", this.getHexLoc().getX());
+		road.addProperty("y", this.getHexLoc().getY());
+		road.addProperty("direction", this.getDir().shortName);
+		return road;
 	}
 	
 	public HexLocation getHexLoc()

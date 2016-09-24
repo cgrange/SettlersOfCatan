@@ -1,5 +1,7 @@
 package shared.model.resources;
 
+import com.google.gson.JsonObject;
+
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 
@@ -151,8 +153,8 @@ public class Bank {
 	 * Serializes the Bank
 	 * @return a json string
 	 */
-	public String serialize()
+	public JsonObject serialize()
 	{
-		return "";
+		return null;
 	}
 }

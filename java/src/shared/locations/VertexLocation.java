@@ -1,5 +1,7 @@
 package shared.locations;
 
+import com.google.gson.JsonObject;
+
 /**
  * Represents the location of a vertex on a hex map
  */
@@ -13,6 +15,15 @@ public class VertexLocation
 	{
 		setHexLoc(hexLoc);
 		setDir(dir);
+	}
+	
+	public JsonObject serialize()
+	{
+		JsonObject settle = new JsonObject();
+		settle.addProperty("x", this.getHexLoc().getX());
+		settle.addProperty("y", this.getHexLoc().getY());
+		settle.addProperty("direction", this.getDir().shortName);
+		return settle;
 	}
 	
 	public HexLocation getHexLoc()
