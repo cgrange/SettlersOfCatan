@@ -2,6 +2,8 @@ package client.proxy;
 
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import client.overview.SimpleGame;
 import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
@@ -14,13 +16,13 @@ import shared.model.resources.Resource;
 public class MockProxy implements IProxy {
 
 	@Override
-	public void user_login() {
+	public void user_login(String username, String password) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void user_register() {
+	public void user_register(String username, String password) {
 		// TODO Auto-generated method stub
 
 	}
@@ -32,19 +34,19 @@ public class MockProxy implements IProxy {
 	}
 
 	@Override
-	public SimpleGame games_create(boolean randomTiles, boolean randomNumbers, boolean randomPorts) {
+	public SimpleGame games_create(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String games_join(int id, CatanColor color) {
+	public void games_join(int id, CatanColor color) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 	@Override
-	public void games_save(int id) {
+	public void games_save(int id, String name) {
 		// TODO Auto-generated method stub
 
 	}
@@ -68,15 +70,15 @@ public class MockProxy implements IProxy {
 	}
 
 	@Override
-	public Model game_commands_get() {
+	public String game_commands_get() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void game_commands_post(List<String> commands) {
+	public Model game_commands_post(String commands) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
@@ -86,9 +88,8 @@ public class MockProxy implements IProxy {
 	}
 
 	@Override
-	public SimpleGame game_addAI(String AIType) {
+	public void game_addAI(String AIType) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -98,103 +99,103 @@ public class MockProxy implements IProxy {
 	}
 
 	@Override
-	public Model move_sendChat(String message) {
+	public Model move_sendChat(String message, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_acceptTrade(boolean willAccept) {
+	public Model move_acceptTrade(boolean willAccept, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_discardCards(Bank toDiscard) {
+	public Model move_discardCards(Bank toDiscard, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_rollNumber(int number) {
+	public Model move_rollNumber(int number, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_buildRoad(boolean free, EdgeLocation edge) {
+	public Model move_buildRoad(boolean free, EdgeLocation edge, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_buildSettlement(boolean free, VertexLocation vertex) {
+	public Model move_buildSettlement(boolean free, VertexLocation vertex, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_buildCity(VertexLocation vertex) {
+	public Model move_buildCity(VertexLocation vertex, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_offerTrade(Bank offer, int playerIndex) {
+	public Model move_offerTrade(Bank offer, int playerIndex, int receiverIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_maritimeTrade(int ratio, Resource inputResource, Resource outputResource) {
+	public Model move_maritimeTrade(int ratio, Resource inputResource, Resource outputResource, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_robPlayer(HexLocation location, int victimIndex) {
+	public Model move_robPlayer(HexLocation location, int victimIndex, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_finishTurn() {
+	public Model move_finishTurn(int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_buyDevCard() {
+	public Model move_buyDevCard(int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_soldier(HexLocation location, int victimIndex) {
+	public Model move_soldier(HexLocation location, int victimIndex, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_yearOfPlenty(Resource resource1, Resource resource2) {
+	public Model move_yearOfPlenty(Resource resource1, Resource resource2, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_roadBuilding(EdgeLocation spot1, EdgeLocation spot2) {
+	public Model move_roadBuilding(EdgeLocation spot1, EdgeLocation spot2, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_monopoly(Resource resource) {
+	public Model move_monopoly(Resource resource, int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Model move_monument() {
+	public Model move_monument(int playerIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}

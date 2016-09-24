@@ -18,8 +18,10 @@ public interface IProxy {
 	 * @pre username is not null
 	 * @pre password is not null
 	 * @post the HTTP response headers set the catan.user cookie to contain the identity of the logged in player
+	 * @param username the username
+	 * @param password the password
 	 */
-	public void user_login();
+	public void user_login(String username, String password);
 
 	/**
 	 * Creates a new user account, logs the caller in
@@ -28,8 +30,10 @@ public interface IProxy {
 	 * @pre the specified username is not already in use
 	 * @post a new user is logged in
 	 * @post the HTTP response headers set the catan.user cookie to contain the identity of the logged in player
+	 * @param username the username
+	 * @param password the password
 	 */
-	public void user_register();
+	public void user_register(String username, String password);
 
 	/**
 	 * Gets info about all games on server
@@ -43,10 +47,11 @@ public interface IProxy {
 	 * @param randomTiles the random tiles
 	 * @param randomNumbers the random numbers
 	 * @param randomPorts the random ports
+	 * @param name the name of the game
 	 * @pre all parameters are valid
 	 * @return A new game information
 	 */
-	public SimpleGame games_create(boolean randomTiles, boolean randomNumbers, boolean randomPorts);
+	public SimpleGame games_create(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String name);
 
 	/**
 	 * Adds the player to the specified game
@@ -60,7 +65,7 @@ public interface IProxy {
 	 * @param color the color of the player
 	 * @return the game
 	 */
-	public String games_join(int id, CatanColor color);
+	public void games_join(int id, CatanColor color);
 
 	/**
 	 * This method is for testing and debugging purposes. When a bug is found, you can use the
@@ -71,8 +76,9 @@ public interface IProxy {
      * @pre specified game ID is valid
      * @pre the specified file name is valid
      * @param id the game ID
+     * @param name the name to save the game under
 	 */
-	public void games_save(int id);
+	public void games_save(int id, String name);
 
 	/**
 	 * This method is for testing and debugging purposes. When a bug is found, you can use the
@@ -110,13 +116,13 @@ public interface IProxy {
 	 * @return a list of commands that have been executed in the game
 	 * @pre the caller is logged in and joined a game
 	 */
-	public Model game_commands_get();
+	public String game_commands_get();
 
 	/**
 	 * Executes the specified command list in the current game
 	 * @param commands the command list to apply
 	 */
-	public void game_commands_post(List<String> commands);
+	public Model game_commands_post(String commands);
 
 	/**
 	 * Returns a list of supported AI player types
@@ -133,7 +139,7 @@ public interface IProxy {
 	 * @post the AI player is added
 	 * @return the game with the AI added
 	 */
-	public SimpleGame game_addAI(String AIType);
+	public void game_addAI(String AIType);
 
 	/**
 	 * Sets the server's logging level
@@ -146,10 +152,11 @@ public interface IProxy {
 	/**
 	 * Sends a chat message
 	 * @param message the message to send
+	 * @param playerIndex Who's playing
 	 * @return the model
 	 * @post the chat should contain your message
 	 */
-	public Model move_sendChat(String message);
+	public Model move_sendChat(String message, int playerIndex);
 
 	/**
 	 * Respond to a trade offer
@@ -159,9 +166,10 @@ public interface IProxy {
 	 * @post if you declined no resources are exchanged
 	 * @post the trade offer is removed
 	 * @param willAccept whether or not you accept the offered trade
+	 * @param playerIndex Who's playing
 	 * @return the model
 	 */
-	public Model move_acceptTrade(boolean willAccept);
+	public Model move_acceptTrade(boolean willAccept, int playerIndex);
 
 	/**
 	 * Discard cards
@@ -171,24 +179,27 @@ public interface IProxy {
 	 * @post you give up the specified resources
 	 * @post if you're the last one to discard, the client model status changes to Robbing
 	 * @param toDiscard the cards you are discarding
+	 * @param playerIndex Who's discarding
 	 * @return the model
 	 */
-	public Model move_discardCards(Bank toDiscard);
+	public Model move_discardCards(Bank toDiscard, int playerIndex);
 
 	/**
 	 * Roll number
 	 * @param number integer in the range 2-12
 	 * @pre it is your turn
 	 * @pre the client model's status is Rolling
-	 * @post the Client model's status is now in discarding, robbing, or playing
+	 * @post the Client model's status is now in playing, robbing, or playing
+	 * @param playerIndex Who's playing
 	 * @return the model
 	 */
-	public Model move_rollNumber(int number);
+	public Model move_rollNumber(int number, int playerIndex);
 
 	/**
 	 * Builds a road
 	 * @param free whether or not you get this piece for free
 	 * @param edge the new road's location
+	 * @param playerIndex Who's playing
 	 * @pre the road location is open
 	 * @pre the road location is connected to another road owned by teh player
 	 * @pre the road location is not on water
@@ -199,12 +210,13 @@ public interface IProxy {
 	 * @post if applicable, "longest road" has been awarded to the player with the longest road
 	 * @return the model
 	 */
-	public Model move_buildRoad(boolean free, EdgeLocation edge);
+	public Model move_buildRoad(boolean free, EdgeLocation edge, int playerIndex);
 
 	/**
 	 * Builds a settlement on the model
 	 * @param free whether or not you get this piece for free
 	 * @param vertex the location of the settlement
+	 * @param playerIndex Who's playing
 	 * @return the model
 	 * @pre the settlement location is open
 	 * @pre the settlement location is not on water
@@ -214,11 +226,12 @@ public interface IProxy {
 	 * @post you lost the resources
 	 * @post the settlement is on the map
 	 */
-	public Model move_buildSettlement(boolean free, VertexLocation vertex);
+	public Model move_buildSettlement(boolean free, VertexLocation vertex, int playerIndex);
 
 	/**
 	 * Builds a city
 	 * @param vertex the location of the city
+	 * @param playerIndex Who's playing
 	 * @return the model
 	 * @pre the city location is where you currently have a settlement
 	 * @pre you have the required resources
@@ -226,64 +239,71 @@ public interface IProxy {
 	 * The city is on the map at the specified location
 	 * You got a settlement back
 	 */
-	public Model move_buildCity(VertexLocation vertex);
+	public Model move_buildCity(VertexLocation vertex, int playerIndex);
 
 	/**
 	 * Creates a trade offer
 	 * @param offer the specified offer
 	 * @param playerIndex the index of the player to receive the trade
+	 * @param playerIndex Who's playing
 	 * @return the model
 	 * @pre you have the resources you are offering
-	 * @post the trade is offered to the otehr player
+	 * @post the trade is offered to the other player
+	 * @param receiverIndex the receiver of the offer
 	 */
-	public Model move_offerTrade(Bank offer, int playerIndex);
+	public Model move_offerTrade(Bank offer, int playerIndex, int receiverIndex);
 
 	/**
 	 * Causes maritime trade
 	 * @param ratio integer 2, 3 or 4
 	 * @param inputResource what you are giving
 	 * @param outputResource what you are getting
+	 * @param playerIndex Who's playing
 	 * @pre you have the resources you are giving
 	 * @pre for ratios less than 4 you ahve the correct port fot he trade
 	 * @return the model
 	 * @post the trade has been executed
 	 */
-	public Model move_maritimeTrade(int ratio, Resource inputResource, Resource outputResource);
+	public Model move_maritimeTrade(int ratio, Resource inputResource, Resource outputResource, int playerIndex);
 
 	/**
 	 * Rob player
 	 * @param location the new robber location
 	 * @param victimIndex playerIndex, or -1 if you are not robbing anyone
+	 * @param playerIndex Who's playing
 	 * @return the model
 	 * @pre the robber is not being kept in the same location
 	 * If a player is being robbed, the player being robbed has resource cards
 	 * @post the robber is in the new location
 	 * @post the player being robbed gave you one of his resource cards
 	 */
-	public Model move_robPlayer(HexLocation location, int victimIndex);
+	public Model move_robPlayer(HexLocation location, int victimIndex, int playerIndex);
 
 	/**
 	 * Finish your turn
 	 * @post the card in your new dev card hand have been transferred to your old dev card hand
 	 * @post it is the next player's turn
 	 * @return the model
+	 * @param playerIndex Who's playing
 	 */
-	public Model move_finishTurn();
+	public Model move_finishTurn(int playerIndex);
 
 	/**
 	 * Draw a dev card
 	 * @pre you have the required resources
 	 * @pre there are dev cards left in the deck
+	 * @param playerIndex Who's playing
 	 * @return the model
 	 * @post the cards in your new dev card hand have been transferred to your old dev card hand
 	 * @post it is the next player's turn
 	 */
-	public Model move_buyDevCard();
+	public Model move_buyDevCard(int playerIndex);
 
 	/**
 	 * Play a soldier dev card
 	 * @param location the new location for the robber
 	 * @param victimIndex the player you are robbing
+	 * @param playerIndex Who's playing
 	 * @return the model
 	 * @pre the robber is not being kept in the same location
 	 * @pre if a player is being robbed, the player being robbed has resource cards
@@ -292,22 +312,24 @@ public interface IProxy {
 	 * @post if applicable, largest army has been awarded to the player who has played the most soldier cards
 	 * @post you are not allowed to play other dev cards during this turn, except monument cards
 	 */
-	public Model move_soldier(HexLocation location, int victimIndex);
+	public Model move_soldier(HexLocation location, int victimIndex, int playerIndex);
 
 	/**
 	 * Plays a year of plenty dev card
 	 * @param resource1 the first resource you want
 	 * @param resource2 the second resource you want to receive
+	 * @param playerIndex Who's playing
 	 * @return the model
 	 * @pre the two specified resources are in the bank
 	 * @post you gained the two specified resources
 	 */
-	public Model move_yearOfPlenty(Resource resource1, Resource resource2);
+	public Model move_yearOfPlenty(Resource resource1, Resource resource2, int playerIndex);
 
 	/**
 	 * Plays a road building dev card
 	 * @param spot1 the first road
 	 * @param spot2 the second road
+	 * @param playerIndex Who's playing
 	 * @pre the first road is connected to one of your roads
 	 * @pre the second road location is connected to one of your roads or the first road location
 	 * @pre neither road location is on water
@@ -317,23 +339,25 @@ public interface IProxy {
 	 * @post if applicable, "longest road" has been awarded to the player with the longest road
 	 * @return the model
 	 */
-	public Model move_roadBuilding(EdgeLocation spot1, EdgeLocation spot2);
+	public Model move_roadBuilding(EdgeLocation spot1, EdgeLocation spot2, int playerIndex);
 
 	/**
 	 * Plays a monopoly dev card
 	 * @param resource the resouce being taken from the other players
+	 * @param playerIndex Who's playing
 	 * @post all of the other players have given you all of their resource cards of the specified type
 	 * @return the model
 	 */
-	public Model move_monopoly(Resource resource);
+	public Model move_monopoly(Resource resource, int playerIndex);
 
 	/**
 	 * Plays a monument dev card
 	 * @return the model
+	 * @param playerIndex Who's playing
 	 * @pre you have enough monument cards to win the game
 	 * @post you gained a victory point
 	 */
-	public Model move_monument();
+	public Model move_monument(int playerIndex);
 
 
 
