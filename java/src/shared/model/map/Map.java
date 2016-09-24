@@ -1,5 +1,6 @@
 package shared.model.map;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shared.model.map.Road;
@@ -87,42 +88,62 @@ public class Map {
 
 	/**
 	 * Gets the objects for the specified player
-	 * @param PlayerIndex the player to get the objects for
+	 * @param playerIndex the player to get the objects for
 	 * @return the list of objects
 	 */
-	public List<Road> getRoadsForPlayer(int PlayerIndex)
+	public List<Road> getRoadsForPlayer(int playerIndex)
 	{
-		return null;
+		 List<Road> playerRoads = new ArrayList<Road>();
+	        for (int i = 0; i < roads.size(); i++){
+	            if (roads.get(i).getOwner().getPlayerIndex() == (playerIndex))
+	                    playerRoads.add(roads.get(i));
+	        }
+	        return playerRoads;
 	}
 
 	/**
 	 * Gets the objects for the specified player
-	 * @param PlayerIndex the player to get the objects for
+	 * @param playerIndex the player to get the objects for
 	 * @return the list of objects
 	 */
-	public List<Settlement> getSettlementsForPlayer(int PlayerIndex)
+	public List<Settlement> getSettlementsForPlayer(int playerIndex)
 	{
-		return null;
+		List<Settlement> playerSettlements = new ArrayList<Settlement>();
+        for (int i = 0; i < settlements.size(); i++){
+            if (settlements.get(i).getOwner().getPlayerIndex() == (playerIndex))
+                    playerSettlements.add(settlements.get(i));
+        }
+        return playerSettlements;
 	}
 
 	/**
 	 * Gets the objects for the specified player
-	 * @param PlayerIndex the player to get the objects for
+	 * @param playerIndex the player to get the objects for
 	 * @return the list of objects
 	 */
-	public List<City> getCitiesForPlayer(int PlayerIndex)
+	public List<City> getCitiesForPlayer(int playerIndex)
 	{
-		return null;
+		List<City> playerCities = new ArrayList<City>();
+        for (int i = 0; i < cities.size(); i++){
+            if (cities.get(i).getOwner().getPlayerIndex() == (playerIndex))
+                    playerCities.add(cities.get(i));
+        }
+        return playerCities;
 	}
 
 	/**
 	 * Gets the objects for the specified player
-	 * @param PlayerIndex the player to get the objects for
+	 * @param playerIndex the player to get the objects for
 	 * @return the list of objects
 	 */
-	public List<Port> getPortsForPlayer(int PlayerIndex)
+	public List<Port> getPortsForPlayer(int playerIndex)
 	{
-		return null;
+		List<Port> playerPorts = new ArrayList<Port>();
+        for (int i = 0; i < ports.size(); i++){
+            if (ports.get(i).getOwner().getPlayerIndex() == (playerIndex))
+                    playerPorts.add(ports.get(i));
+        }
+        return playerPorts;
 	}
 
 	/**
