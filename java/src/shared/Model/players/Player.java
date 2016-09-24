@@ -48,6 +48,7 @@ public class Player {
 		//TODO get current player from turn tracker
 		return new Player(Color.BLUE, "bob", 3);
 	}
+	
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
 	}

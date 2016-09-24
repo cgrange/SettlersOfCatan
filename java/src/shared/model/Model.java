@@ -23,9 +23,8 @@ public class Model {
 	 * @param playerIndex the player to get the points of
 	 * @return the number of points
 	 */
-	public int calculatePoints(int playerIndex)
+	public int calculatePoints(Player currentPlayer)
 	{
-		Player currentPlayer = Player.get(playerIndex);
 		int points = 0;
 
 		points += currentPlayer.getNumberOfSettlements();
@@ -66,6 +65,14 @@ public class Model {
 
 	public int getVersion(){
 		return version;
+	}
+
+	public void setMap(Map m){
+		map = m;
+	}
+
+	public Map getMap(){
+		return map;
 	}
 
 	public void setVersion(int v){

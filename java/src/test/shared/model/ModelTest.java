@@ -11,11 +11,12 @@ public class ModelTest {
   @Test
   public void calculatePoints() {
 
-    //Player testPlayer = Player.get;
+    Player testPlayer = Player.getCurrentPlayer();
 
-    //testPlayer.setNumberOfSettlements(3);
+    testPlayer.setNumberOfSettlements(3);
 
-    //assertEquals(3, Model.get().calculatePoints(0));
+    assertEquals(3, Model.get().calculatePoints(testPlayer));
+
 
   }
 }
