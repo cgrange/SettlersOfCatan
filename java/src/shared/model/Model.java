@@ -25,14 +25,8 @@ public class Model {
 	 */
 	public int calculatePoints(int playerIndex)
 	{
-		Player currentPlayer;
+		Player currentPlayer = Player.get(playerIndex);
 		int points = 0;
-
-		for(Player p : players){
-			if (p.getPlayerIndex() == playerIndex){
-				currentPlayer = p;
-			}
-		}
 
 		points += currentPlayer.getNumberOfSettlements();
 

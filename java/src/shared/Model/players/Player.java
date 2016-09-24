@@ -30,6 +30,7 @@ public class Player {
 	private String name;
 	private Color color;
 	private int numberOfMonuments;
+	
 	public int getPlayerID() {
 		return playerID;
 	}
