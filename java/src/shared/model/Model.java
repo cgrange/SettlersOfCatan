@@ -1,5 +1,6 @@
 package shared.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shared.locations.HexLocation;
@@ -17,6 +18,17 @@ public class Model {
 	private int version;
 	private TurnTracker turnTracker;
 	private TradeOffer tradeOffer;
+	
+	public Model(String jsonString)
+	{
+		//TODO: Implement
+		centralBank = null;
+		players = null;
+		map = null;
+		version = -1;
+		turnTracker = null;
+		tradeOffer = null;
+	}
 	
 	/**
 	 * Gets the points
@@ -43,7 +55,8 @@ public class Model {
 	public static Model get()
 	{
 		if(instance == null){
-			instance = new Model();
+		    //Not a valid constructor
+			//instance = new Model();
 		}
 		return instance;
 	}

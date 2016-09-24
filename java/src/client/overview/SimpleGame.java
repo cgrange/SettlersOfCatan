@@ -1,5 +1,6 @@
 package client.overview;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +11,14 @@ public class SimpleGame {
 	private String title;
 	private int id;
 	private List<SimplePlayer> players;
+	
+	public SimpleGame(String jsonString)
+	{
+		// TODO:Implement
+		title = "";
+		id = 0;
+		players = new ArrayList<SimplePlayer>();
+	}
 	
 	public String getTitle() {
 		return title;
