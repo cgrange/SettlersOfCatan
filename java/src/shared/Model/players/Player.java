@@ -1,6 +1,7 @@
 package shared.model.players;
 
 import shared.model.resources.Bank;
+import shared.Model.Model;
 import shared.model.devcard.DevCardHand;
 
 public class Player {
@@ -41,6 +42,11 @@ public class Player {
 	 */
 	public static Player get(int playerID) {
 		return null;
+	}
+	
+	public static Player getCurrentPlayer(){
+		//TODO get current player from turn tracker 
+		Player player = new Player(Color.BLUE, "bob", 3);
 	}
 
 	public void setPlayerID(int playerID) {
