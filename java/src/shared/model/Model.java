@@ -25,7 +25,14 @@ public class Model {
 	 */
 	public int calculatePoints(int playerIndex)
 	{
-		return 0;
+		Player currentPlayer = Player.get(playerIndex);
+		int points = 0;
+
+		points += currentPlayer.getNumberOfSettlements();
+
+		//add other instances when points are merited.
+
+		return points;
 	}
 	
 	/**
@@ -40,15 +47,48 @@ public class Model {
 		}
 		return instance;
 	}
-	
-	/**
-	 * Resets the current model to the given model
-	 * @param model the model to update the game with
-	 */
-	public static void setCurrentModel(Model model)
-	{
-		
+
+	public Bank getBank(){
+		return centralBank;
 	}
+
+	public void setBank(Bank b){
+		centralBank = b;
+	}
+
+	public List getPlayers(){
+		return players;
+	}
+
+	public void setPlayers(List <Player> playerList){
+		players = playerList;
+	}
+
+	public int getVersion(){
+		return version;
+	}
+
+	public void setVersion(int v){
+		version = v;
+	}
+
+	public TurnTracker getTurnTracker(){
+		return turnTracker;
+	}
+
+	public void setTurnTracker(TurnTracker t){
+		turnTracker = t;
+	}
+
+	public TradeOffer getTradeOffer(){
+		return tradeOffer;
+	}
+
+	public void setTradeOffer(TradeOffer t){
+		tradeOffer = t;
+	}
+
+
 	
 	/**
 	 * serializes a model
