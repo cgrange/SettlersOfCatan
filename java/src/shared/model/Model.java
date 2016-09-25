@@ -2,6 +2,8 @@ package shared.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import shared.locations.HexLocation;
 import shared.model.map.Map;
@@ -18,6 +20,7 @@ public class Model {
 	private int version;
 	private TurnTracker turnTracker;
 	private TradeOffer tradeOffer;
+	private final static Object lockObject = new Object();
 	
 	public Model(String jsonString)
 	{
@@ -58,7 +61,16 @@ public class Model {
 		    //Not a valid constructor
 			//instance = new Model();
 		}
-		return instance;
+		synchronized(lockObject) {
+			return instance;
+		}
+	}
+	
+	public static void set(Model model)
+	{
+		synchronized(lockObject) {
+			instance = model;
+		}
 	}
 
 	public Bank getBank(){

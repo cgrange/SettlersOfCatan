@@ -16,6 +16,8 @@ public class Bank {
 	Resource brick = new Resource(ResourceType.BRICK, 0);
 	Resource wood = new Resource(ResourceType.WOOD, 0);
 	Resource sheep = new Resource(ResourceType.SHEEP, 0);
+	
+	public Bank() {};
 
 	public Resource getResource(ResourceType type){
 		return null;
@@ -155,6 +157,13 @@ public class Bank {
 	 */
 	public JsonObject serialize()
 	{
-		return null;
+		JsonObject bank = new JsonObject();
+		bank.addProperty("brick", Integer.toString(brick.getAmount()));
+		bank.addProperty("ore", Integer.toString(ore.getAmount()));
+		bank.addProperty("sheep", Integer.toString(sheep.getAmount()));
+		bank.addProperty("wheat", Integer.toString(wheat.getAmount()));
+		bank.addProperty("wood", Integer.toString(wood.getAmount()));
+		return bank;
+
 	}
 }

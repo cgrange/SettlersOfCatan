@@ -44,13 +44,13 @@ public class HttpClient implements IHttpClient {
 	
 	private void manageCookies(String shortAddress, HttpURLConnection connection){
 		String cookieValue = "";
-		if(!shortAddress.contains("/games/") && !shortAddress.contains("/user"))
+		if(!shortAddress.contains("/user"))
 		{
 			cookieValue = catanCookie;
-			if(!shortAddress.contains("/games/"))
-			{
-				cookieValue = cookieValue + gameCookie;
-			}
+		}
+		if(!shortAddress.contains("/games/"))
+		{
+			cookieValue = cookieValue + gameCookie;
 		}
 		connection.setRequestProperty("Cookie", cookieValue);
 	}
@@ -78,19 +78,20 @@ public class HttpClient implements IHttpClient {
 		{
 			URL url = new URL(baseURL + postAddress);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            // connection.setRequestProperty("Authorization", authorization);
+            connection.setDoOutput(true);
             connection.setRequestMethod("POST");
+            manageCookies(postAddress, connection);
             OutputStream requestBody = connection.getOutputStream();
             requestBody.write(requestBodyString.getBytes());
             requestBody.close();
-            manageCookies(postAddress, connection);
-
+            
             connection.connect();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 return getResponseBody(connection);
             }
         }
         catch (Exception e) {
+        	System.out.println(e.getMessage());
             return e.getMessage();
         }
 		return "No return value";
@@ -102,7 +103,8 @@ public class HttpClient implements IHttpClient {
 		{
 			URL url = new URL(baseURL + getAddress);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("Get");
+            connection.setDoOutput(true);
+			connection.setRequestMethod("GET");
             manageCookies(getAddress, connection);
 
 			connection.connect();
@@ -111,6 +113,7 @@ public class HttpClient implements IHttpClient {
             }
 		}
 		catch (Exception e) {
+        	System.out.println(e.getMessage());
             return e.getMessage();
         }
 		return "No return value";
