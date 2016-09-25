@@ -26,6 +26,11 @@ public class ServerProxy implements IProxy {
 	{
 		this.httpClient = client;
 	}
+	
+	public IHttpClient getHttpClient()
+	{
+		return this.httpClient;
+	}
 
 	@Override
 	public void user_login(String username, String password) {

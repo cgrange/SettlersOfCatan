@@ -15,6 +15,14 @@ public class HttpClient implements IHttpClient {
 	private String catanCookie = "";
 	private String gameCookie = "";
 	
+	public String getCatanCookie() {
+		return catanCookie;
+	}
+
+	public String getGameCookie() {
+		return gameCookie;
+	}
+
 	private String getResponseBody(HttpURLConnection connection) throws IOException {
 		readCookies(connection);
 		
