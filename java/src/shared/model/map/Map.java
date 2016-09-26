@@ -15,7 +15,7 @@ public class Map {
 	private List<Port> ports;
 	private List<Hex> hexes;
 	private Robber robber;
-
+	
 	/**
 	 * Adds a road
 	 * @exception CannotBuildRoadException if playerIndex or location is invalid.

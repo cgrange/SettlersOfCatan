@@ -1,5 +1,9 @@
 package shared.locations;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 /**
  * Represents the location of a hex on a hex map
  */
@@ -15,6 +19,19 @@ public class HexLocation
 		setY(y);
 	}
 	
+	public HexLocation(String json) {
+		JsonParser parser = new JsonParser();
+		
+		JsonObject jsonObj = parser.parse(json).getAsJsonObject();
+		
+		int x = jsonObj.get("x").getAsInt();
+		int y = jsonObj.get("y").getAsInt();
+		
+		setX(x);
+		setY(y);
+
+	}
+
 	public int getX()
 	{
 		return x;
@@ -91,4 +108,5 @@ public class HexLocation
 	}
 	
 }
+
 
