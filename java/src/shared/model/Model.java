@@ -11,7 +11,7 @@ import shared.model.resources.Bank;
 import shared.model.resources.TradeOffer;
 
 public class Model {
-	private static Model instance;
+	private static Model instance = null;
 	private Bank centralBank;
 	private List<Player> players;
 	private Map map;
@@ -29,6 +29,10 @@ public class Model {
 		turnTracker = null;
 		tradeOffer = null;
 	}
+//
+//	protected Model() {
+//
+//	}
 	
 	/**
 	 * Gets the points
@@ -56,7 +60,7 @@ public class Model {
 	{
 		if(instance == null){
 		    //Not a valid constructor
-			//instance = new Model();
+			instance = new Model("");
 		}
 		return instance;
 	}
@@ -69,7 +73,7 @@ public class Model {
 		centralBank = b;
 	}
 
-	public List getPlayers(){
+	public List<Player> getPlayers(){
 		return players;
 	}
 

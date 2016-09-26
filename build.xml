@@ -14,7 +14,7 @@
     <property name="java.shared.src.dir" value="${java.dir}/src/shared"/>
     <property name="java.client.src.dir" value="${java.dir}/src/client"/>
     <property name="java.server.src.dir" value="${java.dir}/src/server"/>
-    <property name="java.test.src.dir" value="${java.dir}/src/test"/>
+    <property name="java.test.src.dir" value="${java.dir}/test"/>
     <property name="java.lib.dir" value="${java.dir}/lib"/>
     <property name="java.client.build" location="${java.dir}/build/client"/>
 

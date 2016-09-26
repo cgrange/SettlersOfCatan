@@ -1,7 +1,10 @@
 package shared.model.players;
 
+import shared.model.Model;
 import shared.model.resources.Bank;
 import shared.model.devcard.DevCardHand;
+
+import java.util.List;
 
 public class Player {
 
@@ -41,12 +44,19 @@ public class Player {
 	 * @return The player with the stipulated ID
 	 */
 	public static Player get(int playerID) {
+		List<Player> players = Model.get().getPlayers();
+
+		for(Player player: players) {
+			if (player.getPlayerID() == playerID) {
+				return player;
+			}
+		}
+
 		return null;
 	}
 	
 	public static Player getCurrentPlayer(){
-		//TODO get current player from turn tracker
-		return new Player(Color.BLUE, "bob", 3);
+		return Model.get().getTurnTracker().getCurrentPlayer();
 	}
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
@@ -69,7 +79,7 @@ public class Player {
 	}
 
 	public void incrementNumberOfMonuments(int numberOfMonuments) {
-		//TODO
+		numberOfMonuments++;
 	}
 
 	public Bank getResources() {
@@ -109,7 +119,7 @@ public class Player {
 	}
 
 	public void incrementNumberOfSoldiers(int numberOfSoldiers) {
-		//TODO
+		numberOfSoldiers++;
 	}
 
 	public int getNumberOfCities() {
@@ -164,7 +174,7 @@ public class Player {
 	* calculates the number of victory points a Player has
 	* @return the number of points the player has
 	*/
-	public int calculatePoints(){
+	public int calculatePoints() {
 		return 0;
 	}
 

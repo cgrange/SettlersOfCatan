@@ -3,7 +3,12 @@ package shared.model.resources;
 import com.google.gson.JsonObject;
 
 import shared.definitions.ResourceType;
+import shared.exceptions.CannotDecrementException;
 import shared.locations.EdgeLocation;
+import shared.model.Model;
+
+import java.util.List;
+import java.util.Random;
 
 /**
  * Represents a collection of resources
@@ -18,6 +23,18 @@ public class Bank {
 	Resource sheep = new Resource(ResourceType.SHEEP, 0);
 
 	public Resource getResource(ResourceType type){
+		switch (type) {
+			case ORE:
+				return ore;
+			case WHEAT:
+				return wheat;
+			case BRICK:
+				return brick;
+			case WOOD:
+				return wood;
+			case SHEEP:
+				return sheep;
+		}
 		return null;
 	}
 
@@ -26,7 +43,11 @@ public class Bank {
 	 * @return true if the user has resources
 	 */
 	public boolean canRob(){
-		return false;
+		return ( ore.getAmount()   > 0 ||
+		 		 wheat.getAmount() > 0 ||
+				 brick.getAmount() > 0 ||
+				 wood.getAmount()  > 0 ||
+				 sheep.getAmount() > 0 );
 	}
 
 	/**
@@ -34,6 +55,16 @@ public class Bank {
 	 * @param robbingBank the bank to give the resource to
 	 */
 	public void rob(Bank robbingBank) {
+		if (this.canRob()) {
+			int totalAmount = ore.getAmount() + wheat.getAmount() + brick.getAmount() + wood.getAmount() + sheep.getAmount();
+
+			Random rnd = new Random();
+			int resourceToRemove = rnd.nextInt(totalAmount);
+
+
+
+			// select random type that exists
+		}
 	}
 
 	/**
@@ -41,14 +72,20 @@ public class Bank {
 	 * @return true if a settlement can be built
 	 */
 	public boolean canBuildSettlement() {
-		return false;
+		return (   brick.getAmount() > 1
+				&& wood.getAmount()  > 1
+				&& sheep.getAmount() > 1
+				&& wheat.getAmount() > 1);
 	}
 
 	/**
 	 * Removes the amount of resources of a settlement being built
 	 */
-	public void removeSettlementResources() {
-
+	public void removeSettlementResources() throws CannotDecrementException {
+		brick.decrementAmounts(1);
+		wood.decrementAmounts(1);
+		sheep.decrementAmounts(1);
+		wheat.decrementAmounts(1);
 	}
 
 	/**
@@ -56,14 +93,16 @@ public class Bank {
 	 * @return true if a city can be built
 	 */
 	public boolean canBuildCity() {
-		return false;
+		return (   ore.getAmount()   > 3
+				&& wheat.getAmount() > 2);
 	}
 
 	/**
 	 * Removes the amount of resources of a city being built
 	 */
-	public void removeCityResources() {
-
+	public void removeCityResources() throws CannotDecrementException {
+		ore.decrementAmounts(3);
+		wheat.decrementAmounts(2);
 	}
 
 	/**
@@ -71,14 +110,16 @@ public class Bank {
 	 * @return true if a road can be built
 	 */
 	public boolean canBuildRoad() {
-		return false;
+		return (   brick.getAmount() > 1
+				&& wood.getAmount()  > 1);
 	}
 
 	/**
 	 * Removes the amount of resources of a road being built
 	 */
-	public void removeRoadResources() {
-
+	public void removeRoadResources() throws CannotDecrementException {
+		ore.decrementAmounts(1);
+		wheat.decrementAmounts(1);
 	}
 
 	/**
@@ -86,22 +127,28 @@ public class Bank {
 	 * @return true if a dev card can be drawn
 	 */
 	public boolean canDrawDevCard() {
-		return false;
+		return (   ore.getAmount()   > 1
+				&& sheep.getAmount() > 1
+				&& wheat.getAmount() > 1);
 	}
 
 	/**
 	 * Removes the amount of resources of a dev card being drawn
 	 */
-	public void removeDevCardResources() {
-
+	public void removeDevCardResources() throws CannotDecrementException {
+		ore.decrementAmounts(1);
+		sheep.decrementAmounts(1);
+		wheat.decrementAmounts(1);
 	}
 
 	/**
 	 * Facilitates a trade between the two banks
 	 * @param sender The bank sending the offer
 	 * @param receiver The bank receiving the offer
+	 * @param offer The offer being given
 	 */
-	public void acceptTrade(Bank sender, Bank receiver) {
+	public void acceptTrade(Bank sender, Bank receiver, TradeOffer offer) {
+
 
 	}
 
@@ -110,18 +157,19 @@ public class Bank {
 	 * @return The central bank of the game
 	 */
 	public static Bank getCentralBank() {
-		return null;
+		return Model.get().getBank();
 	}
 
 	/**
 	 * Checks whether this player has the resources to make the specified trade
 	 * @param inputResource the resource he wants to trade
 	 * @param outputResource the resource he wants to receive
-	 * @param ratio the correct ratio for the port trade
+	 * @param ratio the correct ratio for the port trade (2, 3 or 4)
 	 * @return whether he has the correct resources
 	 */
 	public boolean canTradeAtPort(Resource inputResource, Resource outputResource, int ratio)
 	{
+
 		return false;
 	}
 
@@ -129,11 +177,11 @@ public class Bank {
 	 * Makes the given trade
 	 * @pre canTradeAtPort is accurate
 	 * @pre the user actually has the specified port
-	 * @param ratio 2,3 or 4
 	 * @param inputResource the resources coming in from the trade
 	 * @param outputResource the resources going out from the trade
+	 * @param ratio 2, 3 or 4
 	 */
-	public void tradeAtPort(int ratio, Resource inputResource, Resource outputResource)
+	public void tradeAtPort(Resource inputResource, Resource outputResource, int ratio)
 	{
 
 	}
@@ -144,8 +192,7 @@ public class Bank {
 	 * @pre the player has the given cards
 	 * @param bank the cards to discard
 	 */
-	public void discard(Bank bank)
-	{
+	public void discard(Bank bank) {
 
 	}
 
