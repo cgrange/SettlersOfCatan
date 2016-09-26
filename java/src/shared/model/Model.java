@@ -1,9 +1,7 @@
 package shared.model;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.ArrayList;
 
 import shared.locations.HexLocation;
 import shared.model.map.Map;
@@ -15,32 +13,19 @@ import shared.model.resources.TradeOffer;
 public class Model {
 	private static Model instance;
 	private Bank centralBank;
-	private List<Player> players;
+	private List<Player> playerList;
 	private Map map;
 	private int version;
 	private TurnTracker turnTracker;
 	private TradeOffer tradeOffer;
-	private final static Object lockObject = new Object();
-	
-	public Model(String jsonString)
-	{
-		//TODO: Implement
-		centralBank = null;
-		players = null;
-		map = null;
-		version = -1;
-		turnTracker = null;
-		tradeOffer = null;
-	}
 	
 	/**
 	 * Gets the points
 	 * @param playerIndex the player to get the points of
 	 * @return the number of points
 	 */
-	public int calculatePoints(int playerIndex)
+	public int calculatePoints(Player currentPlayer)
 	{
-		Player currentPlayer = Player.get(playerIndex);
 		int points = 0;
 
 		points += currentPlayer.getNumberOfSettlements();
@@ -50,6 +35,17 @@ public class Model {
 		return points;
 	}
 	
+	public Model(String jsonString)
+	{
+		//TODO: Implement
+		centralBank = null;
+		playerList = null;
+		map = null;
+		version = -1;
+		turnTracker = null;
+		tradeOffer = null;
+	}
+
 	/**
 	 * Get the main game model
 	 * @pre the model is on the client
@@ -58,19 +54,10 @@ public class Model {
 	public static Model get()
 	{
 		if(instance == null){
-		    //Not a valid constructor
+			//not a valid constructor
 			//instance = new Model();
 		}
-		synchronized(lockObject) {
-			return instance;
-		}
-	}
-	
-	public static void set(Model model)
-	{
-		synchronized(lockObject) {
-			instance = model;
-		}
+		return instance;
 	}
 
 	public Bank getBank(){
@@ -81,16 +68,24 @@ public class Model {
 		centralBank = b;
 	}
 
-	public List getPlayers(){
-		return players;
+	public List<Player> getPlayers(){
+		return playerList;
 	}
 
-	public void setPlayers(List <Player> playerList){
-		players = playerList;
+	public void setPlayers(List <Player> pList){
+		playerList = pList;
 	}
 
 	public int getVersion(){
 		return version;
+	}
+
+	public void setMap(Map m){
+		map = m;
+	}
+
+	public Map getMap(){
+		return map;
 	}
 
 	public void setVersion(int v){
