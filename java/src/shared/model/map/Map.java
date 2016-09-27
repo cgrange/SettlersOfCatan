@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shared.model.map.Road;
+import shared.model.players.Player;
 import shared.locations.*;
+import shared.definitions.HexType;
 import shared.exceptions.*;
 
 public class Map {
@@ -15,7 +17,6 @@ public class Map {
 	private List<Port> ports;
 	private List<Hex> hexes;
 	private Robber robber;
-	
 	/**
 	 * Adds a road
 	 * @exception CannotBuildRoadException if playerIndex or location is invalid.
@@ -163,6 +164,47 @@ public class Map {
 	public void harvestResources(int dieRoll)
 	{
 
+	}
+	
+	/**
+	 * Gets the object for the specified player and location
+	 * @param playerIndex the player to get the object for
+	 * @param cLocation the location to get the object for
+	 * @return true or false
+	 */
+	public boolean findSettlementForPlayer(Player player, VertexLocation vLocation)
+	{
+		List<Settlement> playerSettlements = new ArrayList<Settlement>();
+        for (int i = 0; i < settlements.size(); i++){
+            if (player.equals(settlements.get(i).getOwner()) && settlements.get(i).getLocation().equals(vLocation)){
+                    return true;
+            }
+        }
+        return false;
+	}
+	
+	/**
+	 * checks weather a certain hex is a certain type
+	 * @param HexLocation the location to check for
+	 * @param HexType the type to check for
+	 * @return true or false depending on if both parameters hold true
+	 */
+	public boolean checkHexType(HexLocation hLocation, HexType type){
+		for (int i = 0; i <hexes.size(); i++){
+			if (hexes.get(i).getLocation().equals(hLocation) && hexes.get(i).getHexType().equals(type)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	
+	public Robber getRobber() {
+		return robber;
+	}
+
+	public void setRobber(Robber robber) {
+		this.robber = robber;
 	}
 
 	/**
