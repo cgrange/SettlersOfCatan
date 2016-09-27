@@ -30,7 +30,19 @@ public class Model {
 
 		points += currentPlayer.getNumberOfSettlements();
 
-		//add other instances when points are merited.
+		int cityPoints = currentPlayer.getNumberOfCities()*2;
+		points += cityPoints;
+
+		TurnTracker turnT = TurnTracker.get();
+		if (turnT.getLongestRoad() == currentPlayer){
+			points += 2;
+		}
+
+		if (turnT.getLargestArmy() == currentPlayer){
+			points += 2;
+		}
+
+		//checking for victory point cards? do we have those implemented anywhere for me to check?
 
 		return points;
 	}
@@ -51,13 +63,12 @@ public class Model {
 	 * @pre the model is on the client
 	 * @return the main game model
 	 */
-	public static Model get()
-	{
-		if(instance == null){
-			//not a valid constructor
-			//instance = new Model();
-		}
+	public static Model get(){
 		return instance;
+	}
+
+	public static void set(Model m){
+		instance = m;
 	}
 
 	public Bank getBank(){
@@ -72,7 +83,7 @@ public class Model {
 		return playerList;
 	}
 
-	public void setPlayers(List <Player> pList){
+	public void setPlayers(List<Player> pList){
 		playerList = pList;
 	}
 

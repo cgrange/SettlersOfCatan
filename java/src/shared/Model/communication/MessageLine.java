@@ -5,13 +5,16 @@ import shared.model.players.Player;
 
 public class MessageLine {
 
-	private int playerIndex;
+	private int playerID;
 	private String entry;
+	private String playerName;
+	private CatanColor color;
 
 
-	public MessageLine(int playerIndex, String entry){
-		this.playerIndex = playerIndex;
+	public MessageLine(int playerID, String entry){
+		this.playerID = playerID;
 		this.entry = entry;
+		this.playerName = Player.get(playerID).getName();
 	}
 	
 	/**
@@ -19,7 +22,11 @@ public class MessageLine {
 	 * @param playerIndex index of source player
 	 * @return the color for the player
 	 */
-	public CatanColor getPlayerColor(int playerIndex){
+	public CatanColor getPlayerColor(int playerID){
+
+		//just return this next line once Color is changed to CatanColor across the other classes
+		Player.get(playerID).getColor();
+
 		return null;
 	}
 
@@ -28,7 +35,9 @@ public class MessageLine {
 	* @return the entry
 	*/
 	public String toString(){
-		return entry;
+
+		String str = new String(playerName + " " + entry);
+		return str.toString();
 	}
 
 	/**

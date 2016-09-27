@@ -13,7 +13,7 @@ public class Communication {
 	 * @param line the chat line to add
 	 */
 	public void addChatLine(MessageLine line){
-
+		chatList.add(line);
 	}
 
 	public List <MessageLine> getChatList(){
@@ -25,7 +25,7 @@ public class Communication {
 	 * @param line the log line to add
 	 */
 	public void addLogLine(MessageLine line){
-
+		logList.add(line);
 	}
 
 	public List <MessageLine> getLogList(){
