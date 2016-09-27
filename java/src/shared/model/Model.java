@@ -59,6 +59,11 @@ public class Model {
 		}
 		return instance;
 	}
+	
+	public static void set(Model model)
+	{
+		
+	}
 
 	public Bank getBank(){
 		return centralBank;
