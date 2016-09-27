@@ -1,6 +1,9 @@
 package shared.locations;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * Represents the location of an edge on a hex map
@@ -10,6 +13,23 @@ public class EdgeLocation
 	
 	private HexLocation hexLoc;
 	private EdgeDirection dir;
+	
+	public EdgeLocation(String edgeLocationStr) throws Exception{
+		
+		hexLoc = new HexLocation(edgeLocationStr);
+		
+		JsonParser jsonParser = new JsonParser();
+		JsonObject jsonObj = jsonParser.parse(edgeLocationStr).getAsJsonObject();
+		
+		String directionStr = jsonObj.get("direction").getAsString();
+		dir = EdgeDirection.getEdgeDirection(directionStr);
+		
+	}
+	
+	public EdgeLocation(String locationStr, String directionStr) throws Exception{
+		hexLoc = new HexLocation(locationStr);
+		dir = EdgeDirection.getEdgeDirection(directionStr);
+	}
 	
 	public EdgeLocation(HexLocation hexLoc, EdgeDirection dir)
 	{
