@@ -198,8 +198,7 @@ public class Bank {
 	 */
 	public boolean canTradeAtPort(Resource inputResource, Resource outputResource, int ratio)
 	{
-
-		return false;
+		return ((inputResource.getAmount() / outputResource.getAmount()) == ratio);
 	}
 
 	/**
@@ -212,7 +211,13 @@ public class Bank {
 	 */
 	public void tradeAtPort(Resource inputResource, Resource outputResource, int ratio)
 	{
-
+		try {
+			this.getResource(inputResource.getType()).decrementAmounts(inputResource.getAmount());
+		}
+		catch (CannotDecrementException exception) {
+			System.out.println("Cannot decrement.");
+		}
+		this.getResource(outputResource.getType()).incrementAmounts(outputResource.getAmount());
 	}
 
 	/**
@@ -222,7 +227,15 @@ public class Bank {
 	 * @param bank the cards to discard
 	 */
 	public void discard(Bank bank) {
+		List<Resource> resources = bank.getResources();
+		for (Resource r : resources ) {
+			Resource currentResource = this.getResource(r.getType());
 
+			try {
+				currentResource.decrementAmounts(r.getAmount());
+			} catch (CannotDecrementException exception) {
+			}
+		}
 	}
 
 	/**

@@ -34,7 +34,7 @@ public class Resource {
 	 */
 	public void decrementAmounts(int toDecrement) throws CannotDecrementException
 	{
-		if (this.amount - toDecrement >= 0) {
+		if ((this.amount - toDecrement) >= 0) {
 			this.amount -= toDecrement;
 		}
 		else {
