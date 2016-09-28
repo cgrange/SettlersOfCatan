@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import shared.locations.HexLocation;
 import shared.model.map.Map;
+import shared.model.map.*;
 import shared.model.players.*;
 import shared.model.resources.*;
 import shared.model.devcard.*;
@@ -18,15 +19,21 @@ public class Model {
 	private TurnTracker turnTracker;
 	private TradeOffer tradeOffer;
 	private DevCardHand centralDevCardHand;
+	private int longestRoadPlayerIndex;
+	private int largestArmyPlayerIndex;
+
+	//create method hasLongestRoad which returns a playerIndex of the longest road
 
 	/**
 	 * Gets the points
-	 * @param playerIndex the player to get the points of
+	 * @param playerID the player to get the points of
 	 * @return the number of points
 	 */
-	public int calculatePoints(Player currentPlayer)
+	public int calculatePoints(int playerIndex)
 	{
 		int points = 0;
+
+		Player currentPlayer = Player.get(playerIndex);
 
 		points += currentPlayer.getNumberOfSettlements();
 
@@ -43,8 +50,17 @@ public class Model {
 		}
 
 		//checking for victory point cards? do we have those implemented anywhere for me to check?
+		//monument cards
 
 		return points;
+	}
+
+	public void setLongestRoad(int playerIndex){
+		longestRoadPlayerIndex = playerIndex;
+	}
+
+	public int getLongestRoad(){
+		return longestRoadPlayerIndex;
 	}
 
 	public Model(String jsonString)
@@ -150,6 +166,14 @@ public class Model {
 	 */
 	public void plunder(HexLocation location, Player player)
 	{
+		Robber robber = map.getRobber();
+
+		robber.move(location);
+
+		Bank bankToRob = player.getResources();
+
+		bankToRob.rob(TurnTracker.get().getCurrentPlayer().getResources());
+
 
 	}
 

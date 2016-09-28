@@ -1,6 +1,10 @@
 package shared.model.players;
 
 import shared.definitions.Status;
+import shared.model.Model;
+import java.util.ArrayList;
+import java.util.List;
+import shared.model.map.Map;
 
 /**
  * A class to interface with the game state button
@@ -8,6 +12,7 @@ import shared.definitions.Status;
  */
 public class TurnTracker {
 
+	private static TurnTracker instance;
 	private Player currentPlayer;
 	private Status status;
 	private Player longestRoad;
@@ -31,11 +36,44 @@ public class TurnTracker {
 
 	public Player getLongestRoad() {
 		//TODO: re-compute longest road
+
+		//get from map class
+
+		Map m = Model.get().getMap();
+		//m.getLongestRoad();
+
+
+		// //Doesn't longest road have to be consecutive and not branched? Need to figure out how to do that...
+		// List<Player> pList = Model.get().getPlayers();
+		// if(longestRoad == null){
+		// 	longestRoad = pList.get(0);
+		// }
+
+		// for(Player p : pList){
+		// 	if(p.getNumberOfRoads() > longestRoad.getNumberOfRoads()){
+		// 		longestRoad = p;
+		// 	}
+		// }
+
 		return longestRoad;
 	}
 
 	public Player getLargestArmy() {
-		//TODO: re-compute largest army
+
+		//get from player class
+
+		//largestArmy = Player.get().getLargestArmy();
+
+		// List<Player> pList = Model.get().getPlayers();
+		// if(largestArmy == null){
+		// 	largestArmy = pList.get(0);
+		// }
+		
+		// for(Player p : pList){
+		// 	if(p.getNumberOfSoldiers() > largestArmy.getNumberOfSoldiers()){
+		// 		largestArmy = p;
+		// 	}
+		// }
 		return largestArmy;
 	}
 
@@ -44,6 +82,7 @@ public class TurnTracker {
 	 */
 	public void moveOn()
 	{
+
 	}
 
 	/**
@@ -52,7 +91,10 @@ public class TurnTracker {
 	 */
 	public static TurnTracker get()
 	{
-		return null;
+		if(instance == null){
+			instance = new TurnTracker();
+		}
+		return instance;
 	}
 	
 	/**
@@ -61,7 +103,7 @@ public class TurnTracker {
 	 */
 	public Player isTurn()
 	{
-		return null;
+		return currentPlayer;
 	}
 	
 	/**
@@ -91,6 +133,7 @@ public class TurnTracker {
 	 */
 	public boolean canUseRobber(int playerIndex)
 	{
+
 		return false;
 	}
 	
@@ -101,7 +144,7 @@ public class TurnTracker {
 	 */
 	public int totalPoints(int playerIndex)
 	{
-		return 0;
+		return Model.get().calculatePoints(playerIndex);
 	}
 	
 	/**

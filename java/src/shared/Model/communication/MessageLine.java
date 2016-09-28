@@ -10,7 +10,6 @@ public class MessageLine {
 	private String playerName;
 	private CatanColor color;
 
-
 	public MessageLine(int playerID, String entry){
 		this.playerID = playerID;
 		this.entry = entry;
