@@ -1,6 +1,11 @@
 package shared.model;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import client.poller.Poller;
+
 import java.util.ArrayList;
 
 import shared.locations.HexLocation;
@@ -11,6 +16,7 @@ import shared.model.devcard.*;
 
 public class Model {
 	private static Model instance;
+	private static Object lockObject;
 	private Bank centralBank;
 	private List<Player> playerList;
 	private Map map;
@@ -62,7 +68,10 @@ public class Model {
 
 	public static void set(Model model)
 	{
-
+		synchronized(lockObject)
+		{
+			instance = model;
+		}
 	}
 
 	public Bank getBank(){
