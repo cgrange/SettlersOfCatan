@@ -1,11 +1,15 @@
 package client.proxy;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import client.overview.SimpleGame;
+import client.poller.Poller;
 import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -16,7 +20,12 @@ import shared.model.resources.Resource;
 
 public class ServerProxy implements IProxy {
 	
-	private IHttpClient httpClient = new HttpClient();
+	private IHttpClient httpClient;
+	
+	public ServerProxy()
+	{
+		httpClient = new HttpClient();
+	}
 	
 	/**
 	 * For testing purposes, we can add an IHttpClient so that it will construct the request, but not actually send it
@@ -25,6 +34,11 @@ public class ServerProxy implements IProxy {
 	public void setHttpClient(IHttpClient client)
 	{
 		this.httpClient = client;
+	}
+	
+	public IHttpClient getHttpClient()
+	{
+		return this.httpClient;
 	}
 
 	@Override
@@ -45,9 +59,14 @@ public class ServerProxy implements IProxy {
 
 	@Override
 	public List<SimpleGame> games_list() {
-		String data = httpClient.get("games/list");
-		// TODO: Create this
-		return null;
+		String data = httpClient.get("/games/list");
+		JsonArray array = new JsonParser().parse(data).getAsJsonArray();
+		ArrayList<SimpleGame> games = new ArrayList<SimpleGame>();
+		for(JsonElement game: array)
+		{
+			games.add(new SimpleGame(game.toString()));
+		}
+		return games;
 	}
 
 	@Override
@@ -64,15 +83,17 @@ public class ServerProxy implements IProxy {
 	@Override
 	public void games_join(int id, CatanColor color) {
 		JsonObject request = new JsonObject();
-		request.addProperty("id", id);
+		request.addProperty("id", Integer.toString(id));
 		request.addProperty("color", color.name().toLowerCase());
 		httpClient.post("/games/join", request.toString());
+		
+		Poller.setTimer(this);
 	}
 
 	@Override
 	public void games_save(int id, String name) {
 		JsonObject request = new JsonObject();
-		request.addProperty("id", id);
+		request.addProperty("id", Integer.toString(id));
 		request.addProperty("name", name);
 		httpClient.post("/games/save", request.toString());
 	}
@@ -86,7 +107,7 @@ public class ServerProxy implements IProxy {
 
 	@Override
 	public Model game_model(int versionNumber) {
-		String data = httpClient.get("game/model?version=" + versionNumber);
+		String data = httpClient.get("/game/model?version=" + versionNumber);
 		if (data != "true")
 		{
 			return new Model(data);
@@ -111,7 +132,12 @@ public class ServerProxy implements IProxy {
 
 	@Override
 	public List<String> game_listAI() {
-		// TODO Auto-generated method stub
+		JsonArray list = new JsonParser().parse(httpClient.get("/game/listAI")).getAsJsonArray();
+		List<String> aiList = new ArrayList<String>();
+		for(JsonElement item:list)
+		{
+			aiList.add(item.getAsString());
+		}
 		return null;
 	}
 
@@ -133,7 +159,7 @@ public class ServerProxy implements IProxy {
 	{
 		JsonObject request = new JsonObject();
 		request.addProperty("type", type);
-		request.addProperty("playerIndex", playerIndex);
+		request.addProperty("playerIndex", Integer.toString(playerIndex));
 		return request;
 	}
 
@@ -161,7 +187,7 @@ public class ServerProxy implements IProxy {
 	@Override
 	public Model move_rollNumber(int number, int playerIndex) {
 		JsonObject request = ServerProxy.getIntializedRequest("rollNumber", playerIndex);
-		request.addProperty("number", number);
+		request.addProperty("number", Integer.toString(number));
 		return new Model(httpClient.post("/moves/rollNumber", request.toString()));
 	}
 
@@ -192,14 +218,14 @@ public class ServerProxy implements IProxy {
 	public Model move_offerTrade(Bank offer, int playerIndex, int receiverIndex) {
 		JsonObject request = ServerProxy.getIntializedRequest("offerTrade", playerIndex);
 		request.add("offer", offer.serialize());
-		request.addProperty("receiver", receiverIndex);
+		request.addProperty("receiver", Integer.toString(receiverIndex));
 		return new Model(httpClient.post("/moves/offerTrade", request.toString()));
 	}
 
 	@Override
 	public Model move_maritimeTrade(int ratio, Resource inputResource, Resource outputResource, int playerIndex) {
 		JsonObject request = ServerProxy.getIntializedRequest("maritimeTrade", playerIndex);
-		request.addProperty("ratio", ratio);
+		request.addProperty("ratio", Integer.toString(ratio));
 		request.addProperty("inputResource", inputResource.getType().name().toLowerCase());
 		request.addProperty("outputResource", outputResource.getType().name().toLowerCase());
 		return new Model(httpClient.post("/moves/maritimeTrade", request.toString()));
@@ -208,7 +234,7 @@ public class ServerProxy implements IProxy {
 	@Override
 	public Model move_robPlayer(HexLocation location, int victimIndex, int playerIndex) {
 		JsonObject request = ServerProxy.getIntializedRequest("robPlayer", playerIndex);
-		request.addProperty("victimIndex", victimIndex);
+		request.addProperty("victimIndex", Integer.toString(victimIndex));
 		JsonObject loc = new JsonObject();
 		loc.addProperty("x", location.getX());
 		loc.addProperty("y", location.getY());
@@ -231,7 +257,7 @@ public class ServerProxy implements IProxy {
 	@Override
 	public Model move_soldier(HexLocation location, int victimIndex, int playerIndex) {
 		JsonObject request = ServerProxy.getIntializedRequest("Soldier", playerIndex);
-		request.addProperty("victimIndex", victimIndex);
+		request.addProperty("victimIndex", Integer.toString(victimIndex));
 		JsonObject loc = new JsonObject();
 		loc.addProperty("x", location.getX());
 		loc.addProperty("y", location.getY());
@@ -249,7 +275,7 @@ public class ServerProxy implements IProxy {
 
 	@Override
 	public Model move_roadBuilding(EdgeLocation spot1, EdgeLocation spot2, int playerIndex) {
-		JsonObject request = ServerProxy.getIntializedRequest("road_Building", playerIndex);
+		JsonObject request = ServerProxy.getIntializedRequest("Road_Building", playerIndex);
 		request.add("spot1", spot1.serialize());
 		request.add("spot2", spot1.serialize());
 		return new Model(httpClient.post("/moves/road_Building", request.toString()));

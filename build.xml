@@ -33,6 +33,7 @@
       <pathelement location="${java.dir}/lib/hamcrest-core-1.3.jar"/>
       <pathelement location="${java.dir}/lib/gson-2.2.4.jar"/>
       <pathelement location="${java.client.build}"/>
+      <pathelement location="${java.test.src.dir}"/>
     </path>
 
     <!-- Jar file path/name from here -->
@@ -171,37 +172,33 @@
 
   <target name="test-compile" depends="package">
     <mkdir dir="${test.build.dir}"/>
-    <javac srcdir="${java.test.src.dir}" destdir="${test.build.dir}" includeantruntime="false">
+    <javac srcdir="${java.test.src.dir}" destdir="${test.build.dir}" includeantruntime="false" debug="true">
       <classpath refid="java.lib.classpath" />
       <classpath refid="classpath.test"/>
     </javac>
   </target>
 
-  <target name="test-client" depends="test-compile">
-    <junit printsummary="on" haltonfailure="yes" fork="true">
-      <classpath>
-        <path refid="classpath.test"/>
-        <pathelement location="${test.build.dir}"/>
-      </classpath>
-      <formatter type="brief" usefile="false" />
-      <batchtest>
-          <fileset dir="${java.test.src.dir}" includes="**/*Test.java" />
-      </batchtest>
-    </junit>
+  <target name="test" depends="test-compile">
+  	<parallel>
+  		<daemons>
+    		<antcall target="server"/>
+    	</daemons>
+    	<sequential>
+	    	<sleep seconds="2"/>
+		    <junit printsummary="on" haltonfailure="yes" fork="true">
+		      <classpath>
+		        <path refid="classpath.test"/>
+		        <pathelement location="${test.build.dir}"/>
+		      </classpath>
+		      <formatter type="brief" usefile="false" />
+		      <batchtest>
+		          <fileset dir="${java.test.src.dir}" includes="**/*Test.java" />
+		      </batchtest>
+		    </junit>
+		</sequential>
+    </parallel>
   </target>
 
-  <target name="test" depends="test-compile">
-    <junit printsummary="on" haltonfailure="yes" fork="true">
-      <classpath>
-        <path refid="classpath.test"/>
-        <pathelement location="${test.build.dir}"/>
-      </classpath>
-      <formatter type="brief" usefile="false" />
-      <batchtest>
-          <fileset dir="${java.test.src.dir}" includes="**/*Test.java" />
-      </batchtest>
-    </junit>
-  </target>
 
   <target name="make-tester-zip" depends="package" description="makes a zip file for your testing team">
       <zip destfile="./tester.zip" basedir="${java.dist}" />

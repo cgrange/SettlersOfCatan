@@ -28,9 +28,34 @@ public enum EdgeDirection
 		SouthWest.shortName = "SW";
 	}
 	
+	public static EdgeDirection getEdgeDirection(String directionStr) throws Exception{
+		if(directionStr.equalsIgnoreCase("north")){
+			return EdgeDirection.North;
+		}
+		else if(directionStr.equalsIgnoreCase("north east")){
+			return EdgeDirection.NorthEast;
+		}
+		else if(directionStr.equalsIgnoreCase("sout east")){
+			return EdgeDirection.SouthEast;
+		}
+		else if(directionStr.equalsIgnoreCase("south")){
+			return EdgeDirection.South;
+		}
+		else if(directionStr.equalsIgnoreCase("south west")){
+			return EdgeDirection.SouthWest;
+		}
+		else if(directionStr.equalsIgnoreCase("north west")){
+			return EdgeDirection.NorthWest;
+		}
+		else{
+			throw new Exception("the direction string is not what I expected");
+		}
+	}
+	
 	public EdgeDirection getOppositeDirection()
 	{
 		return opposite;
 	}
+	
 }
 

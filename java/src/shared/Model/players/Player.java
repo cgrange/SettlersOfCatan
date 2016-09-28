@@ -4,6 +4,9 @@ import shared.model.Model;
 import shared.model.resources.Bank;
 import shared.model.devcard.DevCardHand;
 
+import shared.definitions.CatanColor;
+
+import java.io.Console;
 import java.util.List;
 
 public class Player {
@@ -19,19 +22,16 @@ public class Player {
 	private int numberOfRoads;
 	private int numberOfSettlements;
 
-	public Player(Color color, String name, int index){
+	public Player(CatanColor color, String name, int index){
 		this.color = color;
 		this.name = name;
 		this.playerIndex = index;
 	}
 
-	public enum Color {
-	     BLUE, RED, ORANGE, YELLOW, GREEN, PURPLE, PUCE, WHITE, BROWN
-	};
 	private int playerID;
 	private int playerIndex;
 	private String name;
-	private Color color;
+	private CatanColor color;
 	private int numberOfMonuments;
 	
 	public int getPlayerID() {
@@ -47,6 +47,7 @@ public class Player {
 		List<Player> players = Model.get().getPlayers();
 
 		for(Player player: players) {
+			System.out.println(player.getPlayerID());
 			if (player.getPlayerID() == playerID) {
 				return player;
 			}
@@ -70,7 +71,7 @@ public class Player {
 		return name;
 	}
 
-	public Color getColor() {
+	public CatanColor getColor() {
 		return color;
 	}
 

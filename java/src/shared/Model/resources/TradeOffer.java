@@ -5,7 +5,8 @@ import shared.model.players.Player;
 public class TradeOffer {
 	private Player sender;
 	private Player receiver;
-	private Bank offer;
+	private Bank senderGive;
+	private Bank senderTake;
 	
 	public Player getSender() {
 		return sender;
@@ -15,20 +16,26 @@ public class TradeOffer {
 		return receiver;
 	}
 
-	public Bank getOffer() {
-		return offer;
+	/**
+	 * Sets the give of the offer
+	 */
+	public void setOffer(Bank giveOffer, Bank takeOffer) {
+		this.senderGive = giveOffer;
+		this.senderTake = takeOffer;
 	}
 
 	/**
 	 * Rejects the trade
 	 */
 	public void reject() {
+
 	}
 	
 	/**
 	 * Makes the appropriate trade
 	 */
-	public void trade() {
+	public void accept() {
+
 	}
 	
 	/**

@@ -1,5 +1,9 @@
 package shared.model.map;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.model.players.Player;
@@ -7,10 +11,23 @@ import shared.model.players.Player;
 public class Port {
 	private int resourcesRequired;
 	private ResourceType resourceType;
-	private EdgeLocation location;
+	private EdgeLocation edgeLocation;
 	private Player owner;
-
 	
+	public Port(String jsonString) throws Exception{
+		
+		owner = null;
+		JsonObject jsonObject = new JsonParser().parse(jsonString).getAsJsonObject();
+		resourcesRequired = jsonObject.get("ratio").getAsInt();
+		String resourceStr = jsonObject.get("resource").getAsString();
+		resourceType = ResourceType.getResourceType(resourceStr);
+		String directionString = jsonObject.get("direction").getAsString();
+		JsonObject locationObj = jsonObject.get("location").getAsJsonObject();
+		Gson gson = new Gson();
+		String locationString = gson.toJson(locationObj);
+		edgeLocation = new EdgeLocation(locationString, directionString);
+		
+	}
 	
 	public Player getOwner() {
 		return owner;
@@ -20,9 +37,9 @@ public class Port {
 		this.owner = owner;
 	}
 
-	public void setLocation(EdgeLocation location)
+	public void setEdgeLocation(EdgeLocation edgeLocation)
 	{
-		this.location = location;
+		this.edgeLocation = edgeLocation;
 		return;
 	}
 
@@ -35,8 +52,8 @@ public class Port {
 		this.resourcesRequired = resourcesRequired;
 	}
 
-	public EdgeLocation getLocation(){
-		return location;
+	public EdgeLocation getEdgeLocation(){
+		return edgeLocation;
 	}
 
 	public int getResourcesRequired(){
