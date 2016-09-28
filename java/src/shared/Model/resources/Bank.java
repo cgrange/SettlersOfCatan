@@ -1,6 +1,7 @@
 package shared.model.resources;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import shared.definitions.ResourceType;
 import shared.exceptions.CannotDecrementException;
@@ -24,7 +25,30 @@ public class Bank {
 	Resource wood = new Resource(ResourceType.WOOD, 0);
 	Resource sheep = new Resource(ResourceType.SHEEP, 0);
 
-	public Bank() {};
+	public Bank(String jsonString) {
+		JsonParser jsonParser = new JsonParser();
+		JsonObject jsonObj = jsonParser.parse(jsonString).getAsJsonObject();
+		
+		int brickAmount = jsonObj.get("brick").getAsInt();
+		brick = new Resource(ResourceType.BRICK, brickAmount);
+		
+		int oreAmount = jsonObj.get("ore").getAsInt();
+		ore = new Resource(ResourceType.ORE, oreAmount);
+		
+		int woodAmount = jsonObj.get("wood").getAsInt();
+		wood = new Resource(ResourceType.WOOD, woodAmount);
+		
+		int sheepAmount = jsonObj.get("sheep").getAsInt();
+		sheep = new Resource(ResourceType.SHEEP, sheepAmount);
+		
+		int wheatAmount = jsonObj.get("wheat").getAsInt();
+		wheat = new Resource(ResourceType.WHEAT, wheatAmount);
+		
+	};
+	
+	public Bank(){
+		//strictly for testing purposes
+	}
 
 	public Resource getResource(ResourceType type){
 		switch (type) {
