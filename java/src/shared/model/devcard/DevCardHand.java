@@ -1,12 +1,21 @@
 package shared.model.devcard;
 
 import shared.definitions.DevCardType;
+import shared.exceptions.CannotDecrementException;
+import shared.model.Model;
+import shared.model.resources.Resource;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * A class representing a hand of dev cards
  *
  */
 public class DevCardHand {
+
+	Random random = new Random();
 
 	private DevCard monopoly = new DevCard(DevCardType.MONOPOLY);
 	private DevCard yearOfPlenty = new DevCard(DevCardType.YEAR_OF_PLENTY);
@@ -29,7 +38,60 @@ public class DevCardHand {
 	 */
 	public static DevCardHand getCentral()
 	{
+		return Model.get().getCentralDevCardHand();
+	}
+
+
+	private List<DevCard> getDevCards()
+	{
+		List<DevCard> cards = new ArrayList<DevCard>();
+		cards.add(monopoly);
+		cards.add(yearOfPlenty);
+		cards.add(monument);
+		cards.add(soldier);
+		cards.add(buildRoad);
+		return cards;
+	}
+
+	public DevCard getRandomDevCard() {
+		int totalAmount = monopoly.getAmount() + yearOfPlenty.getAmount() + monument.getAmount() + soldier.getAmount() + buildRoad.getAmount();
+
+		int cardsToRemove = random.nextInt(totalAmount);
+
+		for(DevCard r: getDevCards()) {
+
+			if (cardsToRemove < r.getAmount())
+			{
+				try {
+					r.decrementAmounts(1);
+					return new DevCard(r.getType());
+				}
+				catch (CannotDecrementException exception) {
+				}
+			} else { cardsToRemove -= r.getAmount(); }
+		}
+
 		return null;
+	}
+
+	public void setAmount(DevCardType type, int amount) {
+		switch (type){
+			case MONOPOLY:
+				monopoly.setAmount(amount);
+				break;
+			case YEAR_OF_PLENTY:
+				yearOfPlenty.setAmount(amount);
+				break;
+			case MONUMENT:
+				monument.setAmount(amount);
+				break;
+			case SOLDIER:
+				soldier.setAmount(amount);
+				break;
+			case ROAD_BUILD:
+				buildRoad.setAmount(amount);
+				break;
+		}
 	}
 
 	/**
@@ -58,6 +120,23 @@ public class DevCardHand {
 	 */
 	public int getNumberOf(DevCardType type)
 	{
+		switch (type){
+			case MONOPOLY:
+				monopoly.getAmount();
+				break;
+			case YEAR_OF_PLENTY:
+				yearOfPlenty.getAmount();
+				break;
+			case MONUMENT:
+				monument.getAmount();
+				break;
+			case SOLDIER:
+				soldier.getAmount();
+				break;
+			case ROAD_BUILD:
+				buildRoad.getAmount();
+				break;
+		}
 		return 0;
 	}
 

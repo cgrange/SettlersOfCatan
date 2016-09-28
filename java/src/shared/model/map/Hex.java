@@ -13,7 +13,7 @@ public class Hex {
 	private int chit;
 	private HexType hexType;
 	
-	public Hex(String jsonString) throws Exception{
+	public Hex(String jsonString) throws Exception {
 		Gson gson = new Gson();
 		
 		JsonObject jsonObject = new JsonParser().parse(jsonString).getAsJsonObject();
@@ -22,30 +22,9 @@ public class Hex {
 		JsonElement locationElement = jsonObject.get("location");
 		String locationJsonString = gson.toJson(locationElement);
 		location = new HexLocation(locationJsonString);
-			
-		String resource = jsonObject.get("resource").getAsString();
 		
-		if(resource.equalsIgnoreCase("brick")){
-			hexType = HexType.BRICK;
-		}
-		else if(resource.equalsIgnoreCase("ore")){
-			hexType = HexType.ORE;
-		}
-		else if(resource.equalsIgnoreCase("wheat")){
-			hexType = HexType.WHEAT;
-		}
-		else if(resource.equalsIgnoreCase("desert")){
-			hexType = HexType.DESERT;
-		}
-		else if(resource.equalsIgnoreCase("wood")){
-			hexType = HexType.WOOD;
-		}
-		else if(resource.equalsIgnoreCase("sheep")){
-			hexType = HexType.SHEEP;
-		}
-		else {
-			throw new Exception("the resource is not one of the 6 approved resources");
-		}
+		String resource = jsonObject.get("resource").getAsString();
+		hexType = HexType.getHexType(resource);
 		
 	}
 

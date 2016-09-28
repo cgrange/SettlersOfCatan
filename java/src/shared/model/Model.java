@@ -5,10 +5,9 @@ import java.util.ArrayList;
 
 import shared.locations.HexLocation;
 import shared.model.map.Map;
-import shared.model.players.Player;
-import shared.model.players.TurnTracker;
-import shared.model.resources.Bank;
-import shared.model.resources.TradeOffer;
+import shared.model.players.*;
+import shared.model.resources.*;
+import shared.model.devcard.*;
 
 public class Model {
 	private static Model instance;
@@ -18,7 +17,8 @@ public class Model {
 	private int version;
 	private TurnTracker turnTracker;
 	private TradeOffer tradeOffer;
-	
+	private DevCardHand centralDevCardHand;
+
 	/**
 	 * Gets the points
 	 * @param playerIndex the player to get the points of
@@ -34,7 +34,7 @@ public class Model {
 
 		return points;
 	}
-	
+
 	public Model(String jsonString)
 	{
 		//TODO: Implement
@@ -55,7 +55,7 @@ public class Model {
 	{
 		if(instance == null){
 			//not a valid constructor
-			//instance = new Model();
+			instance = new Model("");
 		}
 		return instance;
 	}
@@ -63,6 +63,11 @@ public class Model {
 	public static void set(Model model)
 	{
 		
+	}
+
+	public static void set(Model model)
+	{
+
 	}
 
 	public Bank getBank(){
@@ -113,8 +118,16 @@ public class Model {
 		tradeOffer = t;
 	}
 
+	public void setCentralDevCardHand(DevCardHand h) { centralDevCardHand = h; }
 
-	
+	public DevCardHand getCentralDevCardHand() {
+		return centralDevCardHand;
+	}
+
+	public DevCard getRandomDevCard() {
+		return centralDevCardHand.getRandomDevCard();
+	}
+
 	/**
 	 * serializes a model
 	 * @return a json string
@@ -123,15 +136,15 @@ public class Model {
 	{
 		return "";
 	}
-	
+
 	/**
 	 * Plunders a given player
 	 * @param location moves the robber to the given hex
 	 * @param player takes a random resource from this player
 	 */
-	public void Plunder(HexLocation location, Player player)
+	public void plunder(HexLocation location, Player player)
 	{
-		
+
 	}
 
 }

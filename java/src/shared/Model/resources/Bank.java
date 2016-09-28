@@ -8,6 +8,7 @@ import shared.locations.EdgeLocation;
 import shared.model.Model;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -15,6 +16,7 @@ import java.util.Random;
  *
  */
 public class Bank {
+	Random random = new Random();
 
 	Resource ore = new Resource(ResourceType.ORE, 0);
 	Resource wheat = new Resource(ResourceType.WHEAT, 0);
@@ -22,6 +24,8 @@ public class Bank {
 	Resource wood = new Resource(ResourceType.WOOD, 0);
 	Resource sheep = new Resource(ResourceType.SHEEP, 0);
 	
+	public Bank() {};
+
 	public Bank() {};
 
 	public Resource getResource(ResourceType type){
@@ -40,6 +44,21 @@ public class Bank {
 		return null;
 	}
 
+	private List<Resource> getResources()
+	{
+		List<Resource> resources = new ArrayList<Resource>();
+		resources.add(ore);
+		resources.add(wheat);
+		resources.add(brick);
+		resources.add(wood);
+		resources.add(sheep);
+		return resources;
+	}
+
+	public static Bank getCentral(){
+		return Model.get().getBank();
+	}
+
 	/**
 	 * Checks whether the bank has any resources
 	 * @return true if the user has resources
@@ -50,6 +69,7 @@ public class Bank {
 				 brick.getAmount() > 0 ||
 				 wood.getAmount()  > 0 ||
 				 sheep.getAmount() > 0 );
+
 	}
 
 	/**
@@ -60,12 +80,24 @@ public class Bank {
 		if (this.canRob()) {
 			int totalAmount = ore.getAmount() + wheat.getAmount() + brick.getAmount() + wood.getAmount() + sheep.getAmount();
 
-			Random rnd = new Random();
-			int resourceToRemove = rnd.nextInt(totalAmount);
+			int resourceToRemove = random.nextInt(totalAmount);
 
+			for(Resource r: getResources()) {
 
+				if (resourceToRemove < r.getAmount())
+				{
+					try {
+						r.decrementAmounts(1);
+						robbingBank.getResource(r.getType()).incrementAmounts(1);
+						return;
+					}
+					catch (CannotDecrementException exception) {
+					}
 
-			// select random type that exists
+					return;
+				} else { resourceToRemove -= r.getAmount(); }
+			}
+
 		}
 	}
 
@@ -144,14 +176,11 @@ public class Bank {
 	}
 
 	/**
-	 * Facilitates a trade between the two banks
-	 * @param sender The bank sending the offer
-	 * @param receiver The bank receiving the offer
+	 * Facilitates a trade with a TradeOffer
 	 * @param offer The offer being given
 	 */
-	public void acceptTrade(Bank sender, Bank receiver, TradeOffer offer) {
-
-
+	public void acceptTrade(TradeOffer offer) {
+		offer.accept();
 	}
 
 	/**
@@ -171,8 +200,7 @@ public class Bank {
 	 */
 	public boolean canTradeAtPort(Resource inputResource, Resource outputResource, int ratio)
 	{
-
-		return false;
+		return ((inputResource.getAmount() / outputResource.getAmount()) == ratio);
 	}
 
 	/**
@@ -185,7 +213,13 @@ public class Bank {
 	 */
 	public void tradeAtPort(Resource inputResource, Resource outputResource, int ratio)
 	{
-
+		try {
+			this.getResource(inputResource.getType()).decrementAmounts(inputResource.getAmount());
+		}
+		catch (CannotDecrementException exception) {
+			System.out.println("Cannot decrement.");
+		}
+		this.getResource(outputResource.getType()).incrementAmounts(outputResource.getAmount());
 	}
 
 	/**
@@ -195,7 +229,15 @@ public class Bank {
 	 * @param bank the cards to discard
 	 */
 	public void discard(Bank bank) {
+		List<Resource> resources = bank.getResources();
+		for (Resource r : resources ) {
+			Resource currentResource = this.getResource(r.getType());
 
+			try {
+				currentResource.decrementAmounts(r.getAmount());
+			} catch (CannotDecrementException exception) {
+			}
+		}
 	}
 
 	/**
