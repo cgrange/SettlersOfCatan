@@ -34,6 +34,12 @@ public class Resource {
 	 */
 	public void decrementAmounts(int toDecrement) throws CannotDecrementException
 	{
+		if (this.amount - toDecrement >= 0) {
+			this.amount -= toDecrement;
+		}
+		else {
+			throw new CannotDecrementException("Cannot decrement below zero");
+		}
 	}
 
 	/**
@@ -42,6 +48,7 @@ public class Resource {
 	 * @param toIncrement how much to increment the resource
 	 */
 	public void incrementAmounts(int toIncrement) {
+		this.amount += toIncrement;
 	}
 
 	/**
@@ -51,6 +58,6 @@ public class Resource {
 	 */
 	public boolean hasEnough(int amount)
 	{
-		return false;
+		return (this.amount >= amount);
 	}
 }

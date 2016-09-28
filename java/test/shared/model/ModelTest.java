@@ -3,19 +3,22 @@ package shared.model;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-import shared.model.*;
-import shared.model.players.Player;
-
+import shared.definitions.DevCardType;
+import shared.model.devcard.*;
 
 public class ModelTest {
+
   @Test
-  public void calculatePoints() {
+  public void getRandomDevCard() {
+    Model m = Model.get();
+    DevCardHand hand = new DevCardHand();
+    hand.setAmount(DevCardType.MONOPOLY, 1);
 
-    //Player testPlayer = Player.get;
+    m.setCentralDevCardHand(hand);
 
-    //testPlayer.setNumberOfSettlements(3);
+    DevCard randomCard = Model.get().getRandomDevCard();
 
-    //assertEquals(3, Model.get().calculatePoints(0));
-
+    assertEquals(0, hand.getNumberOf(DevCardType.MONOPOLY));
+    assertEquals(DevCardType.MONOPOLY, randomCard.getType());
   }
 }
