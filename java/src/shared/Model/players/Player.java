@@ -43,12 +43,12 @@ public class Player {
 	 * @param playerID the Player ID of the desired player
 	 * @return The player with the stipulated ID
 	 */
-	public static Player get(int playerID) {
+	public static Player get(int playerIndex) {
 		List<Player> players = Model.get().getPlayers();
 
 		for(Player player: players) {
-			System.out.println(player.getPlayerID());
-			if (player.getPlayerID() == playerID) {
+			System.out.println(player.getPlayerIndex());
+			if (player.getPlayerIndex() == playerIndex) {
 				return player;
 			}
 		}
