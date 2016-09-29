@@ -8,6 +8,12 @@ import client.poller.Poller;
 
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import shared.locations.HexLocation;
 import shared.model.map.Map;
 import shared.model.players.*;
@@ -41,8 +47,28 @@ public class Model {
 		return points;
 	}
 
-	public Model(String jsonString)
+	public Model(String jsonString) throws Exception
 	{
+		Gson gson = new Gson();
+		JsonParser jsonParser = new JsonParser();
+		JsonObject jsonObj = jsonParser.parse(jsonString).getAsJsonObject();
+		
+		JsonElement deckElement = jsonObj.get("deck");
+		String deckStr = gson.toJson(deckElement);
+		centralDevCardHand = new DevCardHand(deckStr);
+		
+		JsonElement mapElement = jsonObj.get("map");
+		String mapStr = gson.toJson(mapElement);
+		map = new Map(mapStr);
+		
+		JsonArray playerArray = jsonObj.get("players").getAsJsonArray();
+		for(int i = 0; i < playerArray.size(); i++){
+			JsonElement playerElement = playerArray.get(i);
+			String playerStr = gson.toJson(playerElement);
+			Player player = new Player(playerStr);
+			playerList.add(player);
+		}
+		centralDevCardHand = new DevCardHand(mapStr);
 		//TODO: Implement
 		centralBank = null;
 		playerList = null;
