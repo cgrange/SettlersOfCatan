@@ -13,7 +13,7 @@ public class Hex {
 	private int chit;
 	private HexType hexType;
 	
-	public Hex(String jsonString) throws Exception {
+	public Hex(String jsonString) {
 		Gson gson = new Gson();
 		
 		JsonObject jsonObject = new JsonParser().parse(jsonString).getAsJsonObject();
@@ -24,7 +24,12 @@ public class Hex {
 		location = new HexLocation(locationJsonString);
 		
 		String resource = jsonObject.get("resource").getAsString();
-		hexType = HexType.getHexType(resource);
+		try {
+			hexType = HexType.getHexType(resource);
+		} catch (Exception e) {
+			// TODO idk if I should do anything else here or just print the info so that we'll hopefully be able to track it down?
+			e.printStackTrace();
+		}
 		
 	}
 

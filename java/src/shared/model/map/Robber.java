@@ -5,6 +5,9 @@ import shared.locations.HexLocation;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import shared.exceptions.CannotMoveException;
 
 /**
@@ -14,6 +17,11 @@ import shared.exceptions.CannotMoveException;
 public class Robber {
 	private HexLocation location;
 	private HexLocation previousLocation;
+	
+	public Robber(String jsonStr){
+		location = new HexLocation(jsonStr);
+		previousLocation = null;
+	}
 
 	/**
 	 * moves the robber to the player's desired location

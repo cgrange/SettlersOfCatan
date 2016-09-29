@@ -8,6 +8,10 @@ import shared.model.players.Player;
 public abstract class VertexObject {
 	private Player owner;
 	private VertexLocation location;
+	
+	public VertexObject(String jsonString){
+		//TODO implement... I actually already have but that's in a different branch
+	}
 
 	public Player getOwner() {
 		return owner;
