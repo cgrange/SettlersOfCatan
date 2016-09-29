@@ -1,15 +1,16 @@
 package shared.model.map;
 
 public class Settlement extends VertexObject {
-
-	public Settlement(String jsonString) {
+	
+	private static int pointValue = 1;
+	
+	public Settlement(String jsonString) throws Exception {
 		super(jsonString);
 	}
 
 	@Override
 	public int getPointValue() {
-		// TODO Auto-generated method stub
-		return 0;
+		return pointValue;
 	}
 
 }

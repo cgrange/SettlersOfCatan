@@ -53,7 +53,7 @@ public class Map {
 	    }
 	}
 	
-	private void deserializeSettlements(JsonObject mapObject) {
+	private void deserializeSettlements(JsonObject mapObject) throws Exception {
 		JsonArray settlementArray = mapObject.getAsJsonArray("settlements");
 	    for(int i = 0; i < settlementArray.size(); i++){
 	    	String settlementJsonString = settlementArray.get(i).getAsString();
@@ -63,7 +63,7 @@ public class Map {
 	    }
 	}
 	
-	private void deserializeCities(JsonObject mapObject) {
+	private void deserializeCities(JsonObject mapObject) throws Exception {
 		JsonArray cityArray = mapObject.getAsJsonArray("cities");
 	    for(int i = 0; i < cityArray.size(); i++){
 	    	String cityJsonString = cityArray.get(i).getAsString();
@@ -80,7 +80,7 @@ public class Map {
 	
 	// ====================================================== END CONSTRUCTOR HELPER FUNCTIONS ===================================================== 
 	
-	public Map(String jsonStr) {
+	public Map(String jsonStr) throws Exception {
 		JsonElement jelement = new JsonParser().parse(jsonStr);
 	    JsonObject mapObject = jelement.getAsJsonObject();
 	    
