@@ -120,8 +120,12 @@ public class Player {
 	public int getNumberOfMonuments() {
 		return numberOfMonuments;
 	}
+	
+	public void setNumberOfMonuments(int numberOfMonuments) {
+		this.numberOfMonuments = numberOfMonuments;
+	}
 
-	public void incrementNumberOfMonuments(int numberOfMonuments) {
+	public void incrementNumberOfMonuments() {
 		numberOfMonuments++;
 	}
 
