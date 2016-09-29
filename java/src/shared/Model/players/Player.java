@@ -10,17 +10,20 @@ import java.io.Console;
 import java.util.List;
 
 public class Player {
+	
+	// Some constants
+	private static final int roadsAllowed = 15;
+	private static final int settlementsAllowed = 5;
+	private static final int citiesAllowed = 4;
 
 	private Bank resources;
 	private DevCardHand newDevCards;
 	private DevCardHand oldDevCards;
 	private int points;
 	private int numberOfSoldiers;
-	private int numberOfCities;
 	private boolean discarded;
 	private boolean playedDevCard;
-	private int numberOfRoads;
-	private int numberOfSettlements;
+
 
 	public Player(CatanColor color, String name, int index){
 		this.color = color;
@@ -123,14 +126,6 @@ public class Player {
 		numberOfSoldiers++;
 	}
 
-	public int getNumberOfCities() {
-		return numberOfCities;
-	}
-
-	public void setNumberOfCities(int numberOfCities) {
-		this.numberOfCities = numberOfCities;
-	}
-
 	public boolean hasDiscarded() {
 		return discarded;
 	}
@@ -146,22 +141,31 @@ public class Player {
 	public void setPlayedDevCard(boolean playedDevCard) {
 		this.playedDevCard = playedDevCard;
 	}
-
-	public int getNumberOfRoads() {
-		return numberOfRoads;
+	
+	public int getNumberOfBuiltRoads() {
+		return Model.get().getMap().getRoadsForPlayer(this.playerIndex).size();
+	}
+	
+	public int getNumberOfUnbuildRoads() {
+		return roadsAllowed - getNumberOfBuiltRoads();
+	}
+	
+	public int getNumberOfBuiltSettlements() {
+		return Model.get().getMap().getSettlementsForPlayer(this.playerIndex).size();
+	}
+	
+	public int getNumberOfUnbuiltSettlements() {
+		return settlementsAllowed - getNumberOfBuiltSettlements();
+	}
+	
+	public int getNumberOfBuiltCities() {
+		return Model.get().getMap().getCitiesForPlayer(this.playerIndex).size();
+	}
+	
+	public int getNumberOfUnbuiltCities() {
+		return citiesAllowed - getNumberOfBuiltCities();
 	}
 
-	public void setNumberOfRoads(int numberOfRoads) {
-		this.numberOfRoads = numberOfRoads;
-	}
-
-	public int getNumberOfSettlements() {
-		return numberOfSettlements;
-	}
-
-	public void setNumberOfSettlements(int numberOfSettlements) {
-		this.numberOfSettlements = numberOfSettlements;
-	}
 
 	/**
 	* serializes the Player to JSON
