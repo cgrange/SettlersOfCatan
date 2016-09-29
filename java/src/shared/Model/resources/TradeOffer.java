@@ -1,5 +1,7 @@
 package shared.model.resources;
 
+import shared.exceptions.CannotDecrementException;
+import shared.model.Model;
 import shared.model.players.Player;
 
 public class TradeOffer {
@@ -28,14 +30,23 @@ public class TradeOffer {
 	 * Rejects the trade
 	 */
 	public void reject() {
-
+		Model.get().setTradeOffer(null);
 	}
 	
 	/**
 	 * Makes the appropriate trade
+	 * @throws CannotDecrementException 
 	 */
-	public void accept() {
-
+	public void accept() throws CannotDecrementException {
+		Bank senderBank = sender.getResources();
+		Bank receiverBank = receiver.getResources();
+		
+		senderBank.addAmounts(senderTake);
+		senderBank.subtractAmounts(senderGive);
+		
+		receiverBank.addAmounts(senderGive);
+		receiverBank.subtractAmounts(senderTake);
+		Model.get().setTradeOffer(null);
 	}
 	
 	/**

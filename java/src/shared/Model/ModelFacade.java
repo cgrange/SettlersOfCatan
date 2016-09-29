@@ -30,6 +30,9 @@ public class ModelFacade {
 	private static Robber robber;
 	public static boolean canBuildCity(VertexLocation vLocation){
 		updateCurrentObjects();
+		if (player.getNumberOfUnbuiltCities() == 0){
+			return false;
+		}
 		if (!playerBank.canBuildCity()){
 			return false;
 		}
@@ -51,7 +54,7 @@ public class ModelFacade {
 	 */
 	public static boolean canBuildRoad(EdgeLocation eLocation){
 		updateCurrentObjects();
-		if (player.getNumberOfRoads() == 0){
+		if (player.getNumberOfUnbuiltRoads() == 0){
 			return false;
 		}
 		if (!playerBank.canBuildRoad()){
@@ -75,7 +78,7 @@ public class ModelFacade {
 	 */
 	public static boolean canBuildSettlement(VertexLocation vLocation){
 		updateCurrentObjects();
-		if (player.getNumberOfSettlements() == 0){
+		if (player.getNumberOfUnbuiltSettlements() == 0){
 			return false;
 		}
 		if (!playerBank.canBuildSettlement()){

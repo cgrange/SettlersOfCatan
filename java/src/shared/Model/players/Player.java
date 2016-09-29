@@ -14,17 +14,24 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class Player {
+	
+	// Some constants
+	private static final int roadsAllowed = 15;
+	private static final int settlementsAllowed = 5;
+	private static final int citiesAllowed = 4;
 
 	private Bank resources;
 	private DevCardHand newDevCards;
 	private DevCardHand oldDevCards;
 	private int points;
 	private int numberOfSoldiers;
-	private int numberOfUnusedCities;
 	private boolean discarded;
 	private boolean playedDevCard;
+	
+	private int numberOfUnusedCities;
 	private int numberOfUnusedRoads;
 	private int numberOfUnusedSettlements;
+	
 	private int playerID;
 	private int playerIndex;
 	private String name;
@@ -113,8 +120,12 @@ public class Player {
 	public int getNumberOfMonuments() {
 		return numberOfMonuments;
 	}
+	
+	public void setNumberOfMonuments(int numberOfMonuments) {
+		this.numberOfMonuments = numberOfMonuments;
+	}
 
-	public void incrementNumberOfMonuments(int numberOfMonuments) {
+	public void incrementNumberOfMonuments() {
 		numberOfMonuments++;
 	}
 
@@ -158,14 +169,6 @@ public class Player {
 		numberOfSoldiers++;
 	}
 
-	public int getNumberOfCities() {
-		return numberOfUnusedCities;
-	}
-
-	public void setNumberOfCities(int numberOfCities) {
-		this.numberOfUnusedCities = numberOfCities;
-	}
-
 	public boolean hasDiscarded() {
 		return discarded;
 	}
@@ -181,22 +184,31 @@ public class Player {
 	public void setPlayedDevCard(boolean playedDevCard) {
 		this.playedDevCard = playedDevCard;
 	}
-
-	public int getNumberOfRoads() {
-		return numberOfUnusedRoads;
+	
+	public int getNumberOfBuiltRoads() {
+		return Model.get().getMap().getRoadsForPlayer(this.playerIndex).size();
+	}
+	
+	public int getNumberOfUnbuiltRoads() {
+		return roadsAllowed - getNumberOfBuiltRoads();
+	}
+	
+	public int getNumberOfBuiltSettlements() {
+		return Model.get().getMap().getSettlementsForPlayer(this.playerIndex).size();
+	}
+	
+	public int getNumberOfUnbuiltSettlements() {
+		return settlementsAllowed - getNumberOfBuiltSettlements();
+	}
+	
+	public int getNumberOfBuiltCities() {
+		return Model.get().getMap().getCitiesForPlayer(this.playerIndex).size();
+	}
+	
+	public int getNumberOfUnbuiltCities() {
+		return citiesAllowed - getNumberOfBuiltCities();
 	}
 
-	public void setNumberOfRoads(int numberOfRoads) {
-		this.numberOfUnusedRoads = numberOfRoads;
-	}
-
-	public int getNumberOfSettlements() {
-		return numberOfUnusedSettlements;
-	}
-
-	public void setNumberOfSettlements(int numberOfSettlements) {
-		this.numberOfUnusedSettlements = numberOfSettlements;
-	}
 
 	/**
 	* serializes the Player to JSON

@@ -34,7 +34,7 @@ public class Model {
 	{
 		int points = 0;
 
-		points += currentPlayer.getNumberOfSettlements();
+		points += currentPlayer.getNumberOfBuiltSettlements();
 
 		//add other instances when points are merited.
 
