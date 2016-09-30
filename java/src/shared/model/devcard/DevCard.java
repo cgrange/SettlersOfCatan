@@ -2,6 +2,7 @@ package shared.model.devcard;
 
 import shared.definitions.DevCardType;
 import shared.exceptions.CannotDecrementException;
+import shared.model.players.Player;
 
 public class DevCard {
 	private DevCardType type;
@@ -36,14 +37,16 @@ public class DevCard {
 
 	public boolean canPlay()
 	{
-		return false;
+		return (this.amount > 0);
 	}
 
 	//
 	public void play()
 	{
-
-	}
+		amount--;
+		// Logic for actually playing dev cards maybe doesn't make sense here, 
+		// we don't have all the info we need
+	}	
 
 	public String serialize()
 	{

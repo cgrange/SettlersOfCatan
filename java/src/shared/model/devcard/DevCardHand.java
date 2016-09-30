@@ -130,7 +130,25 @@ public class DevCardHand {
 	 */
 	public boolean canPlay(DevCardType type)
 	{
-		return false;
+		DevCard devCard = null;
+		switch (type) {
+		case MONOPOLY:
+			devCard = monopoly;
+			break;
+		case MONUMENT:
+			devCard = monument;
+			break;
+		case YEAR_OF_PLENTY:
+			devCard = yearOfPlenty;
+			break;
+		case SOLDIER:
+			devCard = soldier;
+			break;
+		case ROAD_BUILD:
+			devCard = roadBuilding;
+			break;
+		}
+		return devCard.canPlay();
 	}
 
 	/**
@@ -139,7 +157,25 @@ public class DevCardHand {
 	 */
 	public void play(DevCardType type)
 	{
-
+		DevCard devCard = null;
+		switch (type) {
+		case MONOPOLY:
+			devCard = monopoly;
+			break;
+		case MONUMENT:
+			devCard = monument;
+			break;
+		case YEAR_OF_PLENTY:
+			devCard = yearOfPlenty;
+			break;
+		case SOLDIER:
+			devCard = soldier;
+			break;
+		case ROAD_BUILD:
+			devCard = roadBuilding;
+			break;
+		}
+		devCard.play();
 	}
 
 	/**
@@ -173,9 +209,27 @@ public class DevCardHand {
 	 * Makes new dev cards active at the end of your turn
 	 * @param newHand the new hand for the player
 	 */
-	public void moveToNewDevCardHand(DevCardHand newHand)
+	public void moveToOldDevCardHand(DevCardHand newHand)
 	{
-
+		int count = newHand.monopoly.getAmount();
+		this.monopoly.setAmount(this.monopoly.getAmount() + count);
+		newHand.monopoly.setAmount(0);
+		
+		count = newHand.roadBuilding.getAmount();
+		this.roadBuilding.setAmount(this.roadBuilding.getAmount() + count);
+		newHand.roadBuilding.setAmount(0);
+		
+		count = newHand.soldier.getAmount();
+		this.soldier.setAmount(this.soldier.getAmount() + count);
+		newHand.soldier.setAmount(0);
+		
+		count = newHand.yearOfPlenty.getAmount();
+		this.yearOfPlenty.setAmount(this.yearOfPlenty.getAmount() + count);
+		newHand.yearOfPlenty.setAmount(0);
+		
+		count = newHand.monument.getAmount();
+		this.monument.setAmount(this.monument.getAmount() + count);
+		newHand.monument.setAmount(0);
 	}
 
 }

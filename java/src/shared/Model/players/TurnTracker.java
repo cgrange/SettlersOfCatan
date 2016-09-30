@@ -1,24 +1,45 @@
 package shared.model.players;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import shared.definitions.Status;
 
 /**
  * A class to interface with the game state button
  *
  */
+
 public class TurnTracker {
 
-	private Player currentPlayer;
+	private int currentPlayerIndex;
 	private Status status;
-	private Player longestRoad;
-	private Player largestArmy;
+	private int longestRoadPlayerIndex;
+	private int largestArmyPlayerIndex;
+	
+	public TurnTracker(String jsonStr) throws Exception{
+		JsonParser jsonParser = new JsonParser();
+		JsonObject jsonObj = jsonParser.parse(jsonStr).getAsJsonObject();
+		
+		String statusString = jsonObj.get("status").getAsString();
+		status = Status.getStatus(statusString);
+		
+		currentPlayerIndex = jsonObj.get("currentTurn").getAsInt();
+		largestArmyPlayerIndex = jsonObj.get("largestArmy").getAsInt();
+		longestRoadPlayerIndex = jsonObj.get("longestRoad").getAsInt();
+
+	}
+
+	public TurnTracker(){
+		// for testing purposes
+	}
 
 	public Player getCurrentPlayer() {
-		return currentPlayer;
+		return Player.get(currentPlayerIndex);
 	}
 
 	public void setCurrentPlayer(Player currentPlayer) {
-		this.currentPlayer = currentPlayer;
+		this.currentPlayerIndex = currentPlayer.getPlayerIndex();
 	}
 
 	public Status getStatus() {
@@ -31,12 +52,12 @@ public class TurnTracker {
 
 	public Player getLongestRoad() {
 		//TODO: re-compute longest road
-		return longestRoad;
+		return Player.get(longestRoadPlayerIndex);
 	}
 
 	public Player getLargestArmy() {
 		//TODO: re-compute largest army
-		return largestArmy;
+		return Player.get(largestArmyPlayerIndex);
 	}
 
 	/**
