@@ -5,13 +5,23 @@ import shared.model.players.Player;
 
 public class MessageLine {
 
+<<<<<<< HEAD
 	private int playerID;
+=======
+	private String source;
+>>>>>>> 022e8801e2f3ed7717aaa0a60d80d76cf69b2bcb
 	private String entry;
 	private String playerName;
 	private CatanColor color;
 
+<<<<<<< HEAD
 	public MessageLine(int playerID, String entry){
 		this.playerID = playerID;
+=======
+
+	public MessageLine(String source, String entry){
+		this.source = source;
+>>>>>>> 022e8801e2f3ed7717aaa0a60d80d76cf69b2bcb
 		this.entry = entry;
 		this.playerName = Player.get(playerID).getName();
 	}

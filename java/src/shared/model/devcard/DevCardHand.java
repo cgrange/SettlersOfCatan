@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 /**
  * A class representing a hand of dev cards
  *
@@ -21,7 +24,33 @@ public class DevCardHand {
 	private DevCard yearOfPlenty = new DevCard(DevCardType.YEAR_OF_PLENTY);
 	private DevCard monument = new DevCard(DevCardType.MONUMENT);
 	private DevCard soldier = new DevCard(DevCardType.SOLDIER);
-	private DevCard buildRoad = new DevCard(DevCardType.ROAD_BUILD);
+	private DevCard roadBuilding = new DevCard(DevCardType.ROAD_BUILD);
+	
+	public DevCardHand(String jsonStr){
+
+		JsonParser jsonParser = new JsonParser();
+		JsonObject jsonObj = jsonParser.parse(jsonStr).getAsJsonObject();
+		
+		int yearOfPlentyAmount = jsonObj.get("yearOfPlenty").getAsInt();
+		yearOfPlenty.setAmount(yearOfPlentyAmount);
+		
+		int monopolyAmount = jsonObj.get("monopoly").getAsInt();
+		monopoly.setAmount(monopolyAmount);
+		
+		int soldierAmount = jsonObj.get("soldier").getAsInt();
+		soldier.setAmount(soldierAmount);
+		
+		int roadBuildingAmount = jsonObj.get("roadBuilding").getAsInt();
+		roadBuilding.setAmount(roadBuildingAmount);
+		
+		int monumentAmount = jsonObj.get("monument").getAsInt();
+		monument.setAmount(monumentAmount);
+		
+	}
+	
+	public DevCardHand(){
+		//mainly for testing purposes
+	}
 
 	/**
 	 * Serializes the hand
@@ -49,12 +78,12 @@ public class DevCardHand {
 		cards.add(yearOfPlenty);
 		cards.add(monument);
 		cards.add(soldier);
-		cards.add(buildRoad);
+		cards.add(roadBuilding);
 		return cards;
 	}
 
 	public DevCard getRandomDevCard() {
-		int totalAmount = monopoly.getAmount() + yearOfPlenty.getAmount() + monument.getAmount() + soldier.getAmount() + buildRoad.getAmount();
+		int totalAmount = monopoly.getAmount() + yearOfPlenty.getAmount() + monument.getAmount() + soldier.getAmount() + roadBuilding.getAmount();
 
 		int cardsToRemove = random.nextInt(totalAmount);
 
@@ -89,7 +118,7 @@ public class DevCardHand {
 				soldier.setAmount(amount);
 				break;
 			case ROAD_BUILD:
-				buildRoad.setAmount(amount);
+				roadBuilding.setAmount(amount);
 				break;
 		}
 	}
@@ -101,7 +130,25 @@ public class DevCardHand {
 	 */
 	public boolean canPlay(DevCardType type)
 	{
-		return false;
+		DevCard devCard = null;
+		switch (type) {
+		case MONOPOLY:
+			devCard = monopoly;
+			break;
+		case MONUMENT:
+			devCard = monument;
+			break;
+		case YEAR_OF_PLENTY:
+			devCard = yearOfPlenty;
+			break;
+		case SOLDIER:
+			devCard = soldier;
+			break;
+		case ROAD_BUILD:
+			devCard = roadBuilding;
+			break;
+		}
+		return devCard.canPlay();
 	}
 
 	/**
@@ -110,7 +157,25 @@ public class DevCardHand {
 	 */
 	public void play(DevCardType type)
 	{
-
+		DevCard devCard = null;
+		switch (type) {
+		case MONOPOLY:
+			devCard = monopoly;
+			break;
+		case MONUMENT:
+			devCard = monument;
+			break;
+		case YEAR_OF_PLENTY:
+			devCard = yearOfPlenty;
+			break;
+		case SOLDIER:
+			devCard = soldier;
+			break;
+		case ROAD_BUILD:
+			devCard = roadBuilding;
+			break;
+		}
+		devCard.play();
 	}
 
 	/**
@@ -134,7 +199,7 @@ public class DevCardHand {
 				soldier.getAmount();
 				break;
 			case ROAD_BUILD:
-				buildRoad.getAmount();
+				roadBuilding.getAmount();
 				break;
 		}
 		return 0;
@@ -144,9 +209,27 @@ public class DevCardHand {
 	 * Makes new dev cards active at the end of your turn
 	 * @param newHand the new hand for the player
 	 */
-	public void moveToNewDevCardHand(DevCardHand newHand)
+	public void moveToOldDevCardHand(DevCardHand newHand)
 	{
-
+		int count = newHand.monopoly.getAmount();
+		this.monopoly.setAmount(this.monopoly.getAmount() + count);
+		newHand.monopoly.setAmount(0);
+		
+		count = newHand.roadBuilding.getAmount();
+		this.roadBuilding.setAmount(this.roadBuilding.getAmount() + count);
+		newHand.roadBuilding.setAmount(0);
+		
+		count = newHand.soldier.getAmount();
+		this.soldier.setAmount(this.soldier.getAmount() + count);
+		newHand.soldier.setAmount(0);
+		
+		count = newHand.yearOfPlenty.getAmount();
+		this.yearOfPlenty.setAmount(this.yearOfPlenty.getAmount() + count);
+		newHand.yearOfPlenty.setAmount(0);
+		
+		count = newHand.monument.getAmount();
+		this.monument.setAmount(this.monument.getAmount() + count);
+		newHand.monument.setAmount(0);
 	}
 
 }

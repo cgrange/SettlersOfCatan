@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.*;
 
 import shared.definitions.ResourceType;
+import shared.model.resources.Bank;
 
 public class BankTest {
 
@@ -91,95 +92,106 @@ public class BankTest {
     originalBank = new Bank();
     originalBank.random = new Random(0);
   }
-
-  @Test
-  public void tradeAtPort() {
-    Bank bank = new Bank();
-    bank.getResource(ResourceType.SHEEP).incrementAmounts(4);
-
-    Resource inputResource = new Resource(ResourceType.SHEEP, 4);
-    Resource outputResource = new Resource(ResourceType.BRICK, 1);
-    int ratio = 4;
-
-    bank.tradeAtPort(inputResource, outputResource, ratio);
-    assertEquals(0, bank.getResource(ResourceType.SHEEP).getAmount());
-    assertEquals(1, bank.getResource(ResourceType.BRICK).getAmount());
-
-
-
-    bank = new Bank();
-    bank.getResource(ResourceType.SHEEP).incrementAmounts(3);
-
-    inputResource = new Resource(ResourceType.SHEEP, 3);
-    outputResource = new Resource(ResourceType.BRICK, 1);
-    ratio = 3;
-
-    bank.tradeAtPort(inputResource, outputResource, ratio);
-    assertEquals(0, bank.getResource(ResourceType.SHEEP).getAmount());
-    assertEquals(1, bank.getResource(ResourceType.BRICK).getAmount());
-
-
-    bank = new Bank();
-    bank.getResource(ResourceType.SHEEP).incrementAmounts(2);
-
-    inputResource = new Resource(ResourceType.SHEEP, 2);
-    outputResource = new Resource(ResourceType.BRICK, 1);
-    ratio = 2;
-
-    bank.tradeAtPort(inputResource, outputResource, ratio);
-    assertEquals(0, bank.getResource(ResourceType.SHEEP).getAmount());
-    assertEquals(1, bank.getResource(ResourceType.BRICK).getAmount());
-
-
-    // doesn't remove existing resources
-    bank = new Bank();
-    bank.getResource(ResourceType.SHEEP).incrementAmounts(4);
-
-    inputResource = new Resource(ResourceType.SHEEP, 2);
-    outputResource = new Resource(ResourceType.BRICK, 1);
-    ratio = 2;
-
-    bank.tradeAtPort(inputResource, outputResource, ratio);
-    assertEquals(2, bank.getResource(ResourceType.SHEEP).getAmount());
-    assertEquals(1, bank.getResource(ResourceType.BRICK).getAmount());
-  }
-
-  @Test
-  public void canTradeAtPort() {
-    Bank bank = new Bank();
-
-    Resource inputResource = new Resource(ResourceType.SHEEP, 4);
-    Resource outputResource = new Resource(ResourceType.BRICK, 1);
-    int ratio = 4;
-
-    assert(bank.canTradeAtPort(inputResource, outputResource, ratio));
-
-    inputResource = new Resource(ResourceType.SHEEP, 3);
-    outputResource = new Resource(ResourceType.BRICK, 1);
-    ratio = 3;
-
-    assert(bank.canTradeAtPort(inputResource, outputResource, ratio));
-
-    inputResource = new Resource(ResourceType.SHEEP, 2);
-    outputResource = new Resource(ResourceType.BRICK, 1);
-    ratio = 2;
-
-    assert(bank.canTradeAtPort(inputResource, outputResource, ratio));
-
-  }
-
-
-  @Test
-  public void discard() {
-    Bank originalBank = new Bank();
-    originalBank.ore = new Resource(ResourceType.SHEEP, 1);
-
-    Bank bankToDiscard = new Bank();
-    bankToDiscard.ore = new Resource(ResourceType.SHEEP, 1);
-
-
-    originalBank.discard(bankToDiscard);
-
-    assertEquals(0, originalBank.getResource(ResourceType.SHEEP).getAmount());
-  }
+    
+    @Test
+	public void deserializationTest() {
+		Bank bank = new Bank("{ \"brick\":1, \"ore\":2, \"sheep\":3, \"wheat\":4, \"wood\":5 }");
+		assertTrue(bank.getResource(ResourceType.BRICK).getAmount() == 1);
+		assertTrue(bank.getResource(ResourceType.ORE).getAmount() == 2);
+		assertTrue(bank.getResource(ResourceType.SHEEP).getAmount() == 3);
+		assertTrue(bank.getResource(ResourceType.WHEAT).getAmount() == 4);
+		assertTrue(bank.getResource(ResourceType.WOOD).getAmount() == 5);
+	}
+    
+      @Test
+      public void tradeAtPort() {
+        Bank bank = new Bank();
+        bank.getResource(ResourceType.SHEEP).incrementAmounts(4);
+    
+        Resource inputResource = new Resource(ResourceType.SHEEP, 4);
+        Resource outputResource = new Resource(ResourceType.BRICK, 1);
+        int ratio = 4;
+    
+        bank.tradeAtPort(inputResource, outputResource, ratio);
+        assertEquals(0, bank.getResource(ResourceType.SHEEP).getAmount());
+        assertEquals(1, bank.getResource(ResourceType.BRICK).getAmount());
+    
+    
+    
+        bank = new Bank();
+        bank.getResource(ResourceType.SHEEP).incrementAmounts(3);
+    
+        inputResource = new Resource(ResourceType.SHEEP, 3);
+        outputResource = new Resource(ResourceType.BRICK, 1);
+        ratio = 3;
+    
+        bank.tradeAtPort(inputResource, outputResource, ratio);
+        assertEquals(0, bank.getResource(ResourceType.SHEEP).getAmount());
+        assertEquals(1, bank.getResource(ResourceType.BRICK).getAmount());
+    
+    
+        bank = new Bank();
+        bank.getResource(ResourceType.SHEEP).incrementAmounts(2);
+    
+        inputResource = new Resource(ResourceType.SHEEP, 2);
+        outputResource = new Resource(ResourceType.BRICK, 1);
+        ratio = 2;
+    
+        bank.tradeAtPort(inputResource, outputResource, ratio);
+        assertEquals(0, bank.getResource(ResourceType.SHEEP).getAmount());
+        assertEquals(1, bank.getResource(ResourceType.BRICK).getAmount());
+    
+    
+        // doesn't remove existing resources
+        bank = new Bank();
+        bank.getResource(ResourceType.SHEEP).incrementAmounts(4);
+    
+        inputResource = new Resource(ResourceType.SHEEP, 2);
+        outputResource = new Resource(ResourceType.BRICK, 1);
+        ratio = 2;
+    
+        bank.tradeAtPort(inputResource, outputResource, ratio);
+        assertEquals(2, bank.getResource(ResourceType.SHEEP).getAmount());
+        assertEquals(1, bank.getResource(ResourceType.BRICK).getAmount());
+      }
+    
+      @Test
+      public void canTradeAtPort() {
+        Bank bank = new Bank();
+    
+        Resource inputResource = new Resource(ResourceType.SHEEP, 4);
+        Resource outputResource = new Resource(ResourceType.BRICK, 1);
+        int ratio = 4;
+    
+        assert(bank.canTradeAtPort(inputResource, outputResource, ratio));
+    
+        inputResource = new Resource(ResourceType.SHEEP, 3);
+        outputResource = new Resource(ResourceType.BRICK, 1);
+        ratio = 3;
+    
+        assert(bank.canTradeAtPort(inputResource, outputResource, ratio));
+    
+        inputResource = new Resource(ResourceType.SHEEP, 2);
+        outputResource = new Resource(ResourceType.BRICK, 1);
+        ratio = 2;
+    
+        assert(bank.canTradeAtPort(inputResource, outputResource, ratio));
+    
+      }
+    
+    
+      @Test
+      public void discard() {
+        Bank originalBank = new Bank();
+        originalBank.ore = new Resource(ResourceType.SHEEP, 1);
+    
+        Bank bankToDiscard = new Bank();
+        bankToDiscard.ore = new Resource(ResourceType.SHEEP, 1);
+    
+    
+        originalBank.discard(bankToDiscard);
+    
+       assertEquals(0, originalBank.getResource(ResourceType.SHEEP).getAmount());
+     }
+    
 }

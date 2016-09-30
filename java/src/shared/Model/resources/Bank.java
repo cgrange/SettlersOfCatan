@@ -1,10 +1,10 @@
 package shared.model.resources;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import shared.definitions.ResourceType;
 import shared.exceptions.CannotDecrementException;
-import shared.locations.EdgeLocation;
 import shared.model.Model;
 
 import java.util.List;
@@ -24,7 +24,30 @@ public class Bank {
 	Resource wood = new Resource(ResourceType.WOOD, 0);
 	Resource sheep = new Resource(ResourceType.SHEEP, 0);
 
-	public Bank() {};
+	public Bank(String jsonString) {
+		JsonParser jsonParser = new JsonParser();
+		JsonObject jsonObj = jsonParser.parse(jsonString).getAsJsonObject();
+		
+		int brickAmount = jsonObj.get("brick").getAsInt();
+		brick = new Resource(ResourceType.BRICK, brickAmount);
+		
+		int oreAmount = jsonObj.get("ore").getAsInt();
+		ore = new Resource(ResourceType.ORE, oreAmount);
+		
+		int woodAmount = jsonObj.get("wood").getAsInt();
+		wood = new Resource(ResourceType.WOOD, woodAmount);
+		
+		int sheepAmount = jsonObj.get("sheep").getAsInt();
+		sheep = new Resource(ResourceType.SHEEP, sheepAmount);
+		
+		int wheatAmount = jsonObj.get("wheat").getAsInt();
+		wheat = new Resource(ResourceType.WHEAT, wheatAmount);
+		
+	};
+	
+	public Bank(){
+		//strictly for testing purposes
+	}
 
 	public Resource getResource(ResourceType type){
 		switch (type) {
@@ -176,8 +199,9 @@ public class Bank {
 	/**
 	 * Facilitates a trade with a TradeOffer
 	 * @param offer The offer being given
+	 * @throws CannotDecrementException 
 	 */
-	public void acceptTrade(TradeOffer offer) {
+	public void acceptTrade(TradeOffer offer) throws CannotDecrementException {
 		offer.accept();
 	}
 
@@ -187,6 +211,33 @@ public class Bank {
 	 */
 	public static Bank getCentralBank() {
 		return Model.get().getBank();
+	}
+	
+	/**
+	 * Makes changes by the given amount in the bank
+	 * Central Bank should be decremented accordingly
+	 */
+	public void addAmounts(Bank amounts) throws CannotDecrementException
+	{
+		this.brick.incrementAmounts(amounts.brick.getAmount());
+		this.ore.incrementAmounts(amounts.ore.getAmount());
+		this.wheat.incrementAmounts(amounts.wheat.getAmount());
+		this.sheep.incrementAmounts(amounts.sheep.getAmount());
+		this.wood.incrementAmounts(amounts.wood.getAmount());
+	}
+	
+	/**
+	 * Makes changes by the given amount in the bank
+	 * Central Bank should be incremented accordingly
+	 * @throws CannotDecrementException 
+	 */
+	public void subtractAmounts(Bank amounts) throws CannotDecrementException
+	{
+		this.brick.decrementAmounts(amounts.brick.getAmount());
+		this.ore.decrementAmounts(amounts.ore.getAmount());
+		this.wheat.decrementAmounts(amounts.wheat.getAmount());
+		this.sheep.decrementAmounts(amounts.sheep.getAmount());
+		this.wood.decrementAmounts(amounts.wood.getAmount());
 	}
 
 	/**

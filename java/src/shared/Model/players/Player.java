@@ -3,36 +3,78 @@ package shared.model.players;
 import shared.model.Model;
 import shared.model.resources.Bank;
 import shared.model.devcard.DevCardHand;
-
 import shared.definitions.CatanColor;
 
 import java.io.Console;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 public class Player {
+	
+	// Some constants
+	private static final int roadsAllowed = 15;
+	private static final int settlementsAllowed = 5;
+	private static final int citiesAllowed = 4;
 
 	private Bank resources;
 	private DevCardHand newDevCards;
 	private DevCardHand oldDevCards;
 	private int points;
 	private int numberOfSoldiers;
-	private int numberOfCities;
 	private boolean discarded;
 	private boolean playedDevCard;
-	private int numberOfRoads;
-	private int numberOfSettlements;
+	
+	private int numberOfUnusedCities;
+	private int numberOfUnusedRoads;
+	private int numberOfUnusedSettlements;
+	
+	private int playerID;
+	private int playerIndex;
+	private String name;
+	private CatanColor color;
+	private int numberOfMonuments;
+	
+	public Player(String jsonString) throws Exception{
+		Gson gson = new Gson();
+		JsonParser jsonParser = new JsonParser();
+		JsonObject jsonObj = jsonParser.parse(jsonString).getAsJsonObject();
+		
+		JsonElement resourcesElement = jsonObj.get("resources");
+		String resourcesStr = gson.toJson(resourcesElement);
+		resources = new Bank(resourcesStr);
+		
+		JsonElement oldDevCardsElement = jsonObj.get("oldDevCards");
+		String oldDevCardsStr = gson.toJson(oldDevCardsElement);
+		oldDevCards = new DevCardHand(oldDevCardsStr);
+		
+		JsonElement newDevCardsElement = jsonObj.get("newDevCards");
+		String newDevCardsStr = gson.toJson(newDevCardsElement);
+		newDevCards = new DevCardHand(newDevCardsStr);
+		
+		numberOfUnusedRoads = jsonObj.get("roads").getAsInt();
+		numberOfUnusedCities = jsonObj.get("cities").getAsInt();
+		numberOfUnusedSettlements = jsonObj.get("settlements").getAsInt();
+		numberOfSoldiers = jsonObj.get("soldiers").getAsInt();
+		points = jsonObj.get("victoryPoints").getAsInt();
+		numberOfMonuments = jsonObj.get("monuments").getAsInt();
+		playedDevCard = jsonObj.get("playedDevCard").getAsBoolean();
+		discarded = jsonObj.get("discarded").getAsBoolean();
+		playerID = jsonObj.get("playerID").getAsInt();
+		playerIndex = jsonObj.get("playerIndex").getAsInt();
+		name = jsonObj.get("name").getAsString();
+		String  colorStr = jsonObj.get("color").getAsString();
+		color = CatanColor.getCatanColor(colorStr);
+	}
 
 	public Player(CatanColor color, String name, int index){
 		this.color = color;
 		this.name = name;
 		this.playerIndex = index;
 	}
-
-	private int playerID;
-	private int playerIndex;
-	private String name;
-	private CatanColor color;
-	private int numberOfMonuments;
 	
 	public int getPlayerID() {
 		return playerID;
@@ -43,12 +85,12 @@ public class Player {
 	 * @param playerID the Player ID of the desired player
 	 * @return The player with the stipulated ID
 	 */
-	public static Player get(int playerID) {
+	public static Player get(int playerIndex) {
 		List<Player> players = Model.get().getPlayers();
 
 		for(Player player: players) {
-			System.out.println(player.getPlayerID());
-			if (player.getPlayerID() == playerID) {
+			System.out.println(player.getPlayerIndex());
+			if (player.getPlayerIndex() == playerIndex) {
 				return player;
 			}
 		}
@@ -79,8 +121,12 @@ public class Player {
 	public int getNumberOfMonuments() {
 		return numberOfMonuments;
 	}
+	
+	public void setNumberOfMonuments(int numberOfMonuments) {
+		this.numberOfMonuments = numberOfMonuments;
+	}
 
-	public void incrementNumberOfMonuments(int numberOfMonuments) {
+	public void incrementNumberOfMonuments() {
 		numberOfMonuments++;
 	}
 
@@ -124,14 +170,6 @@ public class Player {
 		numberOfSoldiers++;
 	}
 
-	public int getNumberOfCities() {
-		return numberOfCities;
-	}
-
-	public void setNumberOfCities(int numberOfCities) {
-		this.numberOfCities = numberOfCities;
-	}
-
 	public boolean hasDiscarded() {
 		return discarded;
 	}
@@ -147,22 +185,31 @@ public class Player {
 	public void setPlayedDevCard(boolean playedDevCard) {
 		this.playedDevCard = playedDevCard;
 	}
-
-	public int getNumberOfRoads() {
-		return numberOfRoads;
+	
+	public int getNumberOfBuiltRoads() {
+		return Model.get().getMap().getRoadsForPlayer(this.playerIndex).size();
+	}
+	
+	public int getNumberOfUnbuiltRoads() {
+		return roadsAllowed - getNumberOfBuiltRoads();
+	}
+	
+	public int getNumberOfBuiltSettlements() {
+		return Model.get().getMap().getSettlementsForPlayer(this.playerIndex).size();
+	}
+	
+	public int getNumberOfUnbuiltSettlements() {
+		return settlementsAllowed - getNumberOfBuiltSettlements();
+	}
+	
+	public int getNumberOfBuiltCities() {
+		return Model.get().getMap().getCitiesForPlayer(this.playerIndex).size();
+	}
+	
+	public int getNumberOfUnbuiltCities() {
+		return citiesAllowed - getNumberOfBuiltCities();
 	}
 
-	public void setNumberOfRoads(int numberOfRoads) {
-		this.numberOfRoads = numberOfRoads;
-	}
-
-	public int getNumberOfSettlements() {
-		return numberOfSettlements;
-	}
-
-	public void setNumberOfSettlements(int numberOfSettlements) {
-		this.numberOfSettlements = numberOfSettlements;
-	}
 
 	/**
 	* serializes the Player to JSON
