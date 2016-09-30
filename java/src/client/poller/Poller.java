@@ -17,6 +17,16 @@ public class Poller {
 	private static IProxy proxy = null;
 	private final static Object lockObject = new Object();
 	
+	//for testing purposes
+	private static boolean hasBeenRun = false;
+	
+	public static boolean resetHasBeenRun()
+	{
+		boolean temp = hasBeenRun;
+		hasBeenRun = false;
+		return temp;
+	}
+	
 	public static void setTimer(IProxy proxy){
 		
 		if(t == null || proxy == null)
@@ -43,6 +53,7 @@ public class Poller {
 	 * updates the client model
 	 */
 	public static void updateModel(){
+		hasBeenRun = true;
 		Model model;
 		if(Model.get() == null)
 		{
