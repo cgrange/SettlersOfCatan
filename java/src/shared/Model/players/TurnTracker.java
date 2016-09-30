@@ -16,12 +16,9 @@ import shared.model.map.Map;
 
 public class TurnTracker {
 
-<<<<<<< HEAD
 	private static TurnTracker instance;
 	private Player currentPlayer;
-=======
 	private int currentPlayerIndex;
->>>>>>> 022e8801e2f3ed7717aaa0a60d80d76cf69b2bcb
 	private Status status;
 	private int longestRoadPlayerIndex;
 	private int largestArmyPlayerIndex;
@@ -59,9 +56,8 @@ public class TurnTracker {
 		this.status = status;
 	}
 
-	public Player getLongestRoad() {
+	public int getLongestRoad() {
 		//TODO: re-compute longest road
-<<<<<<< HEAD
 
 		//get from map class
 
@@ -81,10 +77,10 @@ public class TurnTracker {
 		// 	}
 		// }
 
-		return longestRoad;
+		return longestRoadPlayerIndex;
 	}
 
-	public Player getLargestArmy() {
+	public int getLargestArmy() {
 
 		//get from player class
 
@@ -100,16 +96,9 @@ public class TurnTracker {
 		// 		largestArmy = p;
 		// 	}
 		// }
-		return largestArmy;
-=======
-		return Player.get(longestRoadPlayerIndex);
+		return largestArmyPlayerIndex;
 	}
 
-	public Player getLargestArmy() {
-		//TODO: re-compute largest army
-		return Player.get(largestArmyPlayerIndex);
->>>>>>> 022e8801e2f3ed7717aaa0a60d80d76cf69b2bcb
-	}
 
 	/**
 	 * Move the turn tracker to the next Phase
@@ -119,17 +108,6 @@ public class TurnTracker {
 
 	}
 
-	/**
-	 * Return the turn tracker for the currentGame
-	 * @return the current turn tracker
-	 */
-	public static TurnTracker get()
-	{
-		if(instance == null){
-			instance = new TurnTracker();
-		}
-		return instance;
-	}
 	
 	/**
 	 * Gets the player whose turn it is 
@@ -178,7 +156,7 @@ public class TurnTracker {
 	 */
 	public int totalPoints(int playerIndex)
 	{
-		return Model.get().calculatePoints(playerIndex);
+			return Model.get().calculatePoints(playerIndex);
 	}
 	
 	/**

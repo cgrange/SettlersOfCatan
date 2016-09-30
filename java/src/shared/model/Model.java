@@ -35,7 +35,7 @@ public class Model {
 	 * @param playerID the player to get the points of
 	 * @return the number of points
 	 */
-	public int calculatePoints(Player currentPlayer)
+	public int calculatePoints(int playerIndex)
 	{
 		int points = 0;
 
@@ -43,15 +43,14 @@ public class Model {
 		points += currentPlayer.getNumberOfBuiltSettlements();
 
 
-		int cityPoints = currentPlayer.getNumberOfCities()*2;
+		int cityPoints = currentPlayer.getNumberOfBuiltCities()*2;
 		points += cityPoints;
 
-		TurnTracker turnT = TurnTracker.get();
-		if (turnT.getLongestRoad() == currentPlayer){
+		if (turnTracker.getLongestRoad() == currentPlayer.getPlayerIndex()){
 			points += 2;
 		}
 
-		if (turnT.getLargestArmy() == currentPlayer){
+		if (turnTracker.getLargestArmy() == currentPlayer.getPlayerIndex()){
 			points += 2;
 		}
 
@@ -115,16 +114,16 @@ public class Model {
 		return playerList;
 	}
 
-	public List getPlayers(){
-		return playerList;
-	}
-
 	public void setPlayers(List <Player> pList){
 		playerList = pList;
 	}
 
 	public int getVersion(){
 		return version;
+	}
+
+	public void setVersion(int v){
+		version = v;
 	}
 
 	public void setMap(Map m){
@@ -135,18 +134,6 @@ public class Model {
 		return map;
 	}
 
-	public void setVersion(int v){
-		version = v;
-	}
-
-	public TurnTracker getTurnTracker(){
-		return turnTracker;
-	}
-
-	public void setTurnTracker(TurnTracker t){
-		turnTracker = t;
-	}
-
 	public TradeOffer getTradeOffer(){
 		return tradeOffer;
 	}
@@ -155,7 +142,9 @@ public class Model {
 		tradeOffer = t;
 	}
 
-	public void setCentralDevCardHand(DevCardHand h) { centralDevCardHand = h; }
+	public void setCentralDevCardHand(DevCardHand h) { 
+		centralDevCardHand = h; 
+	}
 
 	public DevCardHand getCentralDevCardHand() {
 		return centralDevCardHand;
@@ -165,32 +154,12 @@ public class Model {
 		return centralDevCardHand.getRandomDevCard();
 	}
 
-	public void setMap(Map m){
-		map = m;
-	}
-
-	public Map getMap(){
-		return map;
-	}
-
-	public void setVersion(int v){
-		version = v;
-	}
-
 	public TurnTracker getTurnTracker(){
 		return turnTracker;
 	}
 
 	public void setTurnTracker(TurnTracker t){
 		turnTracker = t;
-	}
-
-	public TradeOffer getTradeOffer(){
-		return tradeOffer;
-	}
-
-	public void setTradeOffer(TradeOffer t){
-		tradeOffer = t;
 	}
 
 	/**
@@ -215,7 +184,9 @@ public class Model {
 
 		Bank bankToRob = player.getResources();
 
-		bankToRob.rob(TurnTracker.get().getCurrentPlayer().getResources());
+		Player receiver = Player.getCurrentPlayer();
+
+		bankToRob.rob(receiver.getResources());
 
 
 	}
