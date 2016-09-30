@@ -357,6 +357,7 @@ public class Map {
 				return true;
 			break;
 		}
+		return false;
 	}
 	
 	public boolean isConnectedToRoad(int playerIndex, EdgeLocation location) throws CannotBuildRoadException
@@ -483,8 +484,7 @@ public class Map {
 				return true;
 			break;
 		}
-		
-		
+		return false;
 	}
 
 	/**
