@@ -29,6 +29,14 @@ public abstract class VertexObject {
 	public Player getOwner() {
 		return Player.get(ownerIndex);
 	}
+	public VertexObject(int ownerIndex, VertexLocation location){
+		this.ownerIndex = ownerIndex;
+		this.location = location;
+	}
+
+	public int getOwnerIndex() {
+		return ownerIndex;
+	}
 
 	public VertexLocation getLocation() {
 		return location;
