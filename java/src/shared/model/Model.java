@@ -29,7 +29,7 @@ public class Model {
 	 * @param playerID the player to get the points of
 	 * @return the number of points
 	 */
-	public int calculatePoints(int playerIndex)
+	public int calculatePoints(Player currentPlayer)
 	{
 		int points = 0;
 
@@ -104,7 +104,11 @@ public class Model {
 		return playerList;
 	}
 
-	public void setPlayers(List<Player> pList){
+	public List getPlayers(){
+		return playerList;
+	}
+
+	public void setPlayers(List <Player> pList){
 		playerList = pList;
 	}
 
@@ -148,6 +152,34 @@ public class Model {
 
 	public DevCard getRandomDevCard() {
 		return centralDevCardHand.getRandomDevCard();
+	}
+
+	public void setMap(Map m){
+		map = m;
+	}
+
+	public Map getMap(){
+		return map;
+	}
+
+	public void setVersion(int v){
+		version = v;
+	}
+
+	public TurnTracker getTurnTracker(){
+		return turnTracker;
+	}
+
+	public void setTurnTracker(TurnTracker t){
+		turnTracker = t;
+	}
+
+	public TradeOffer getTradeOffer(){
+		return tradeOffer;
+	}
+
+	public void setTradeOffer(TradeOffer t){
+		tradeOffer = t;
 	}
 
 	/**

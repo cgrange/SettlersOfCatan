@@ -59,6 +59,7 @@ public class Player {
 	public static Player getCurrentPlayer(){
 		return Model.get().getTurnTracker().getCurrentPlayer();
 	}
+	
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
 	}
