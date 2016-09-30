@@ -1,6 +1,7 @@
 package shared.locations;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * Represents the location of a vertex on a hex map
@@ -15,6 +16,16 @@ public class VertexLocation
 	{
 		setHexLoc(hexLoc);
 		setDir(dir);
+	}
+	
+	public VertexLocation(String jsonStr) throws Exception{
+		hexLoc = new HexLocation(jsonStr);
+		
+		JsonParser jsonParser = new JsonParser();
+		JsonObject jsonObj = jsonParser.parse(jsonStr).getAsJsonObject();
+		
+		String directionStr = jsonObj.get("direction").getAsString();
+		dir = VertexDirection.getVertexDirection(directionStr);
 	}
 	
 	public JsonObject serialize()

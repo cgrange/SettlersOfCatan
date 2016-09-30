@@ -1,11 +1,16 @@
 package shared.model.map;
 
 public class City extends VertexObject {
+	
+	private static int pointValue = 2;
+
+	public City(String jsonString) throws Exception {
+		super(jsonString);
+	}
 
 	@Override
 	public int getPointValue() {
-		// TODO Auto-generated method stub
-		return 0;
+		return pointValue;
 	}
 
 }

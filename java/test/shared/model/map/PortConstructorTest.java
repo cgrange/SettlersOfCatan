@@ -15,9 +15,9 @@ public class PortConstructorTest {
 	@Test
 	public void test() {
 		try {
-			Port port = new Port(" {\"resource\":\"whEat\",\"location\":{ \"x\":2, \"y\":2 },\"direction\":\"noRth\",\"ratio\":2} ");
+			Port port = new Port(" {\"resource\":\"whEat\",\"location\":{ \"x\":2, \"y\":2 },\"direction\":\"N\",\"ratio\":2} ");
 			assertTrue(port.getOwner() == null);
-			assertTrue(port.getEdgeLocation().equals(new EdgeLocation(new HexLocation(2,2), EdgeDirection.getEdgeDirection("north"))));
+			assertTrue(port.getEdgeLocation().equals(new EdgeLocation(new HexLocation(2,2), EdgeDirection.getEdgeDirection("N"))));
 			assertTrue(port.getResourcesRequired() == 2);
 			assertTrue(port.getResourceType() == ResourceType.WHEAT);
 		} catch (Exception e) {

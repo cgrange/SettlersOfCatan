@@ -14,18 +14,28 @@ public class Port {
 	private EdgeLocation edgeLocation;
 	private Player owner;
 	
-	public Port(String jsonString) throws Exception{
+	public Port(String jsonString) {
 		
 		owner = null;
 		JsonObject jsonObject = new JsonParser().parse(jsonString).getAsJsonObject();
 		resourcesRequired = jsonObject.get("ratio").getAsInt();
 		String resourceStr = jsonObject.get("resource").getAsString();
-		resourceType = ResourceType.getResourceType(resourceStr);
+		try {
+			resourceType = ResourceType.getResourceType(resourceStr);
+		} catch (Exception e) {
+			// TODO idk what we wanna do here... system.exit(1)?
+			e.printStackTrace();
+		}
 		String directionString = jsonObject.get("direction").getAsString();
 		JsonObject locationObj = jsonObject.get("location").getAsJsonObject();
 		Gson gson = new Gson();
 		String locationString = gson.toJson(locationObj);
-		edgeLocation = new EdgeLocation(locationString, directionString);
+		try {
+			edgeLocation = new EdgeLocation(locationString, directionString);
+		} catch (Exception e) {
+			// TODO same as above
+			e.printStackTrace();
+		}
 		
 	}
 	
