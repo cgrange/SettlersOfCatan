@@ -5,12 +5,12 @@ import shared.model.players.Player;
 
 public class MessageLine {
 
-	private int playerIndex;
+	private String source;
 	private String entry;
 
 
-	public MessageLine(int playerIndex, String entry){
-		this.playerIndex = playerIndex;
+	public MessageLine(String source, String entry){
+		this.source = source;
 		this.entry = entry;
 	}
 	
