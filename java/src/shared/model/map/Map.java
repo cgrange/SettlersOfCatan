@@ -9,6 +9,11 @@ import shared.model.players.TurnTracker;
 import shared.locations.*;
 import shared.definitions.HexType;
 import shared.exceptions.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class Map {
 	private List<City> cities;
@@ -18,6 +23,75 @@ public class Map {
 	private List<Port> ports;
 	private List<Hex> hexes;
 	private Robber robber;
+	
+	// =================================================== CONSTRUCTOR HELPER FUNCTIONS =============================================================
+ 	
+ 	private void deserializeHexes(JsonObject mapObject) {
+ 		JsonArray hexArray = mapObject.getAsJsonArray("hexes");
+ 	    for(int i = 0; i < hexArray.size(); i++){
+ 	    	String hexJsonString = hexArray.get(i).getAsString();
+ 		    Hex tempHex = new Hex(hexJsonString);
+ 		    hexes.add(tempHex);
+ 	    }
+ 	}
+ 	
+ 	private void deserializePorts(JsonObject mapObject) {
+ 		JsonArray portArray = mapObject.getAsJsonArray("ports");
+ 	    for(int i = 0; i < portArray.size(); i++){
+ 	    	String portJsonString = portArray.get(i).getAsString();
+ 		    Port tempPort = new Port(portJsonString);
+ 		    ports.add(tempPort);
+ 	    }
+ 	}
+ 	
+ 	private void deserializeRoads(JsonObject mapObject) {
+ 		JsonArray roadArray = mapObject.getAsJsonArray("roads");
+ 	    for(int i = 0; i < roadArray.size(); i++){
+ 	    	String roadJsonString = roadArray.get(i).getAsString();
+ 		    Road tempRoad = new Road(roadJsonString);
+ 		    roads.add(tempRoad);
+ 	    }
+ 	}
+ 	
+ 	private void deserializeSettlements(JsonObject mapObject) throws Exception {
+ 		JsonArray settlementArray = mapObject.getAsJsonArray("settlements");
+ 	    for(int i = 0; i < settlementArray.size(); i++){
+ 	    	String settlementJsonString = settlementArray.get(i).getAsString();
+ 		    Settlement tempSettlement = new Settlement(settlementJsonString);
+ 		    settlements.add(tempSettlement);
+ 		    allVertexObjects.add(tempSettlement);
+ 	    }
+ 	}
+ 	
+ 	private void deserializeCities(JsonObject mapObject) throws Exception {
+ 		JsonArray cityArray = mapObject.getAsJsonArray("cities");
+ 	    for(int i = 0; i < cityArray.size(); i++){
+ 	    	String cityJsonString = cityArray.get(i).getAsString();
+ 		    City tempCity = new City(cityJsonString);
+ 		    cities.add(tempCity);
+ 		    allVertexObjects.add(tempCity);
+ 	    }
+ 	}
+ 	
+ 	private void deserializeRobber(JsonObject mapObject) {
+ 		String robberJson = mapObject.get("robber").getAsString();
+ 		robber = new Robber(robberJson);
+ 	}
+ 	
+ 	// ====================================================== END CONSTRUCTOR HELPER FUNCTIONS ===================================================== 
+ 	
+ 	public Map(String jsonStr) throws Exception {
+ 		JsonElement jelement = new JsonParser().parse(jsonStr);
+ 	    JsonObject mapObject = jelement.getAsJsonObject();
+ 	    
+ 	    deserializeHexes(mapObject);
+ 	    deserializePorts(mapObject);
+ 	    deserializeRoads(mapObject);
+ 	    deserializeCities(mapObject);
+ 	    deserializeSettlements(mapObject);
+ 	    deserializeRobber(mapObject);
+ 	    
+ 	}
 	/**
 	 * Adds a road
 	 * @exception CannotBuildRoadException if playerIndex or location is invalid.
