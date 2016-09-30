@@ -1,16 +1,33 @@
 package shared.model.map;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import shared.exceptions.CannotCollectResourcesException;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.model.players.Player;
 
 public abstract class VertexObject {
-	private Player owner;
+	private int ownerIndex;
 	private VertexLocation location;
+	
+	public VertexObject(String jsonString) throws Exception{
+		Gson gson = new Gson();
+		JsonParser jsonParser = new JsonParser();
+		JsonObject jObj = jsonParser.parse(jsonString).getAsJsonObject();
+		
+		ownerIndex = jObj.get("owner").getAsInt();
+		
+		JsonElement jElement = jObj.get("location");
+		String locationStr = gson.toJson(jElement);
+		location = new VertexLocation(locationStr);
+	}
 
 	public Player getOwner() {
-		return owner;
+		return Player.get(ownerIndex);
 	}
 
 	public VertexLocation getLocation() {

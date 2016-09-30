@@ -29,22 +29,22 @@ public enum EdgeDirection
 	}
 	
 	public static EdgeDirection getEdgeDirection(String directionStr) throws Exception{
-		if(directionStr.equalsIgnoreCase("north")){
+		if(directionStr.equalsIgnoreCase("N")){
 			return EdgeDirection.North;
 		}
-		else if(directionStr.equalsIgnoreCase("north east")){
+		else if(directionStr.equalsIgnoreCase("NE")){
 			return EdgeDirection.NorthEast;
 		}
-		else if(directionStr.equalsIgnoreCase("sout east")){
+		else if(directionStr.equalsIgnoreCase("SE")){
 			return EdgeDirection.SouthEast;
 		}
-		else if(directionStr.equalsIgnoreCase("south")){
+		else if(directionStr.equalsIgnoreCase("S")){
 			return EdgeDirection.South;
 		}
-		else if(directionStr.equalsIgnoreCase("south west")){
+		else if(directionStr.equalsIgnoreCase("SW")){
 			return EdgeDirection.SouthWest;
 		}
-		else if(directionStr.equalsIgnoreCase("north west")){
+		else if(directionStr.equalsIgnoreCase("NW")){
 			return EdgeDirection.NorthWest;
 		}
 		else{
