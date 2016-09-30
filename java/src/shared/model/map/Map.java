@@ -35,7 +35,7 @@ public class Map {
 	    }
 	}
 	
-	private void deserializePorts(JsonObject mapObject) {
+	private void deserializePorts(JsonObject mapObject) throws Exception {
 		JsonArray portArray = mapObject.getAsJsonArray("ports");
 	    for(int i = 0; i < portArray.size(); i++){
 	    	String portJsonString = portArray.get(i).getAsString();
@@ -44,7 +44,7 @@ public class Map {
 	    }
 	}
 	
-	private void deserializeRoads(JsonObject mapObject) {
+	private void deserializeRoads(JsonObject mapObject) throws Exception {
 		JsonArray roadArray = mapObject.getAsJsonArray("roads");
 	    for(int i = 0; i < roadArray.size(); i++){
 	    	String roadJsonString = roadArray.get(i).getAsString();

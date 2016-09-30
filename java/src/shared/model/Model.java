@@ -18,6 +18,7 @@ import shared.locations.HexLocation;
 import shared.model.map.Map;
 import shared.model.players.*;
 import shared.model.resources.*;
+import shared.model.communication.Communication;
 import shared.model.devcard.*;
 
 public class Model {
@@ -30,25 +31,9 @@ public class Model {
 	private TurnTracker turnTracker;
 	private TradeOffer tradeOffer;
 	private DevCardHand centralDevCardHand;
+	private Communication communication;
 
-	/**
-	 * Gets the points
-	 * @param playerIndex the player to get the points of
-	 * @return the number of points
-	 */
-	public int calculatePoints(Player currentPlayer)
-	{
-		int points = 0;
-
-		points += currentPlayer.getNumberOfBuiltSettlements();
-
-		//add other instances when points are merited.
-
-		return points;
-	}
-
-	public Model(String jsonString) throws Exception
-	{
+	public Model(String jsonString) throws Exception{
 		Gson gson = new Gson();
 		JsonParser jsonParser = new JsonParser();
 		JsonObject jsonObj = jsonParser.parse(jsonString).getAsJsonObject();
@@ -68,14 +53,42 @@ public class Model {
 			Player player = new Player(playerStr);
 			playerList.add(player);
 		}
-		centralDevCardHand = new DevCardHand(mapStr);
-		//TODO: Implement
-		centralBank = null;
-		playerList = null;
-		map = null;
-		version = -1;
-		turnTracker = null;
-		tradeOffer = null;
+		
+		JsonElement logElement = jsonObj.get("log");
+		String logStr = gson.toJson(logElement);
+		JsonElement chatElement = jsonObj.get("chat");
+		String chatStr = gson.toJson(chatElement);
+		communication = new Communication(chatStr, logStr);
+		
+		JsonElement bankElement = jsonObj.get("bank");
+		String bankStr = gson.toJson(bankElement);
+		centralBank = new Bank(bankStr);
+		
+		JsonElement turnTrackerElement = jsonObj.get("turnTracker");
+		String turnTrackerStr = gson.toJson(turnTrackerElement);
+		turnTracker = new TurnTracker(turnTrackerStr);
+		
+		JsonElement tradeOfferElement = jsonObj.get("tradeOffer");
+		String tradeOfferStr = gson.toJson(tradeOfferElement);
+		tradeOffer = new TradeOffer(tradeOfferStr);
+		
+		version = jsonObj.get("version").getAsInt();
+	}
+	
+	/**
+	 * Gets the points
+	 * @param playerIndex the player to get the points of
+	 * @return the number of points
+	 */
+	public int calculatePoints(Player currentPlayer)
+	{
+		int points = 0;
+
+		points += currentPlayer.getNumberOfBuiltSettlements();
+
+		//add other instances when points are merited.
+
+		return points;
 	}
 
 	/**
@@ -86,8 +99,7 @@ public class Model {
 	public static Model get()
 	{
 		if(instance == null){
-			//not a valid constructor
-			instance = new Model("");
+			return null;
 		}
 		return instance;
 	}

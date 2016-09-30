@@ -93,16 +93,6 @@ public class BankTest {
     originalBank.random = new Random(0);
   }
     
-    @Test
-	public void deserializationTest() {
-		Bank bank = new Bank("{ \"brick\":1, \"ore\":2, \"sheep\":3, \"wheat\":4, \"wood\":5 }");
-		assertTrue(bank.getResource(ResourceType.BRICK).getAmount() == 1);
-		assertTrue(bank.getResource(ResourceType.ORE).getAmount() == 2);
-		assertTrue(bank.getResource(ResourceType.SHEEP).getAmount() == 3);
-		assertTrue(bank.getResource(ResourceType.WHEAT).getAmount() == 4);
-		assertTrue(bank.getResource(ResourceType.WOOD).getAmount() == 5);
-	}
-    
       @Test
       public void tradeAtPort() {
         Bank bank = new Bank();
