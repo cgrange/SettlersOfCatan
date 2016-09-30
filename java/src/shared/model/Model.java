@@ -7,7 +7,7 @@ import java.util.TimerTask;
 import client.poller.Poller;
 
 import java.util.ArrayList;
-
+import shared.exceptions.CannotMoveException;
 import shared.locations.HexLocation;
 import shared.model.map.Map;
 import shared.model.map.*;
@@ -176,7 +176,7 @@ public class Model {
 	 * @param location moves the robber to the given hex
 	 * @param player takes a random resource from this player
 	 */
-	public void plunder(HexLocation location, Player player)
+	public void plunder(HexLocation location, Player player) throws CannotMoveException
 	{
 		Robber robber = map.getRobber();
 
