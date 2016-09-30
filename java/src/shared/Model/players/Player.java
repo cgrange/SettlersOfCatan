@@ -2,10 +2,18 @@ package shared.model.players;
 
 import shared.model.Model;
 import shared.model.resources.Bank;
+import shared.model.resources.Resource;
 import shared.model.devcard.DevCardHand;
+import shared.model.map.Map;
 import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
+import shared.definitions.ResourceType;
+import shared.exceptions.CannotBuildRoadException;
+import shared.exceptions.CannotDecrementException;
+import shared.exceptions.CannotMoveException;
+import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 
-import java.io.Console;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -23,14 +31,9 @@ public class Player {
 	private Bank resources;
 	private DevCardHand newDevCards;
 	private DevCardHand oldDevCards;
-	private int points;
 	private int numberOfSoldiers;
 	private boolean discarded;
 	private boolean playedDevCard;
-	
-	private int numberOfUnusedCities;
-	private int numberOfUnusedRoads;
-	private int numberOfUnusedSettlements;
 	
 	private int playerID;
 	private int playerIndex;
@@ -55,11 +58,8 @@ public class Player {
 		String newDevCardsStr = gson.toJson(newDevCardsElement);
 		newDevCards = new DevCardHand(newDevCardsStr);
 		
-		numberOfUnusedRoads = jsonObj.get("roads").getAsInt();
-		numberOfUnusedCities = jsonObj.get("cities").getAsInt();
-		numberOfUnusedSettlements = jsonObj.get("settlements").getAsInt();
 		numberOfSoldiers = jsonObj.get("soldiers").getAsInt();
-		points = jsonObj.get("victoryPoints").getAsInt();
+		//points = jsonObj.get("victoryPoints").getAsInt();
 		numberOfMonuments = jsonObj.get("monuments").getAsInt();
 		playedDevCard = jsonObj.get("playedDevCard").getAsBoolean();
 		discarded = jsonObj.get("discarded").getAsBoolean();
@@ -141,33 +141,14 @@ public class Player {
 		return newDevCards;
 	}
 
-	public void setNewDevCards(DevCardHand newDevCards) {
-		this.newDevCards = newDevCards;
-	}
-
 	public DevCardHand getOldDevCards() {
 		return oldDevCards;
-	}
-
-	public void setOldDevCards(DevCardHand oldDevCards) {
-		this.oldDevCards = oldDevCards;
-	}
-
-	public int getPoints() {
-		return points;
-	}
-
-	public void setPoints(int points) {
-		this.points = points;
 	}
 
 	public int getNumberOfSoldiers() {
 		return numberOfSoldiers;
 	}
 
-	public void incrementNumberOfSoldiers(int numberOfSoldiers) {
-		numberOfSoldiers++;
-	}
 
 	public boolean hasDiscarded() {
 		return discarded;
@@ -207,6 +188,55 @@ public class Player {
 	
 	public int getNumberOfUnbuiltCities() {
 		return citiesAllowed - getNumberOfBuiltCities();
+	}
+	
+	public boolean canPlayDevCard(DevCardType type)
+	{
+		return oldDevCards.canPlay(type);
+	}
+	
+	public void playSoldier(HexLocation location, int victimIndex) throws CannotMoveException
+	{
+		oldDevCards.play(DevCardType.SOLDIER);
+		Model.get().getMap().getRobber().move(location);
+		Player.get(victimIndex).getResources().rob(this.getResources());
+	}
+	
+	public void playYearOfPlenty(ResourceType resource1, ResourceType resource2) throws CannotDecrementException
+	{
+		oldDevCards.play(DevCardType.YEAR_OF_PLENTY);
+		this.getResources().getResource(resource1).incrementAmounts(1);
+		Bank.getCentralBank().getResource(resource1).decrementAmounts(1);
+		this.getResources().getResource(resource2).incrementAmounts(1);
+		Bank.getCentralBank().getResource(resource2).decrementAmounts(1);
+	}
+	
+	public void playRoadBuilding(EdgeLocation spot1, EdgeLocation spot2) throws CannotBuildRoadException
+	{
+		oldDevCards.play(DevCardType.ROAD_BUILD);
+		Map map = Model.get().getMap();
+		map.addRoad(playerIndex, spot1);
+		map.addRoad(playerIndex, spot2);
+	}
+	
+	public void playMonopoly(ResourceType resource) throws CannotDecrementException
+	{
+		oldDevCards.play(DevCardType.MONOPOLY);
+		int count = 0;
+		for(Player player:Model.get().getPlayers())
+		{
+			Resource res = player.getResources().getResource(resource);
+			int amount = res.getAmount();
+			count = count + amount;
+			res.decrementAmounts(amount);
+		}
+		this.getResources().getResource(resource).incrementAmounts(count);
+	}
+	
+	public void playMonument()
+	{
+		oldDevCards.play(DevCardType.MONUMENT);
+		this.numberOfMonuments++;
 	}
 
 
